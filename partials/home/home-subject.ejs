@@ -8,21 +8,28 @@
         // Find the subject category
         const subjectCategory = categories.find(category => category.slug === 'subject');
         
-        // Filter child categories of the subject category
-        const childCategories = categories.filter(category => category.parent && category.parent._id.toString() === subjectCategory._id.toString());
-        
-        const limitedChildCategories = childCategories.slice(0, 6);
+        // Ensure subjectCategory exists before accessing its properties
+        if (subjectCategory) {
+          // Filter child categories of the subject category
+          const childCategories = categories.filter(category => category.parent && category.parent._id.toString() === subjectCategory._id.toString());
+          const limitedChildCategories = childCategories.slice(0, 6);
 
-        if (limitedChildCategories.length > 0) { 
+          if (limitedChildCategories.length > 0) { 
+            limitedChildCategories.forEach(childCategory => { 
+              %>
+              <a href="/category/<%= childCategory.slug %>" class="subject-container col-12 col-md-4 col-lg-3" data-aos="fade-up">
+                <h3 class="title"><%= childCategory.title %></h3>
+              </a>
+              <% 
+            }); 
+          } else { 
+            %>
+            <p>No subjects found.</p>
+          <% } 
+        } else { 
           %>
-        <% childCategories.forEach(childCategory => { %>
-          <a href="#" class="subject-container col-12 col-md-4 col-lg-3" data-aos="fade-up">
-            <h3 class="title"><%= childCategory.title %></h3>
-          </a>
-        <% }) %>
-      <% } else { %>
-        <p>No subjects found.</p>
-      <% } %>
+          <p>Subject category not found.</p>
+        <% } %>
     </div>
   </div>
 </div>
