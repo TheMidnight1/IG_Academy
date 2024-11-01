@@ -1,0 +1,46 @@
+<!-- service Section -->
+
+
+<!-- Service Section -->
+<section class="service-section">
+  <div class="container">
+    <h2 class="heading" data-aos="fade-up">
+      What <span class="underline">We Offer</span>
+    </h2>
+
+    <% if (posts && posts.length > 0) { %>
+      <% posts.forEach(post => { %> 
+        <% if (post.category[0].slug === 'services') { %>
+        <div class="row py-5 card-contains">
+          <a
+            href="/post/<%= post._id %>"
+            class="card-container col-12 col-md-4 d-flex flex-column justify-content-center align-items-center"
+            data-aos="fade-up"
+          >
+            <div class="icon-container pb-2">
+              <img src="<%= post.featured_image ? post.featured_image : './goodwill-cleaning/images/default.png' %>" alt="<%= post.featured_image ? post.title : 'Default image' %>" />
+            </div>
+            <h3 class="title pb-2"><%= post.title %></h3>
+            <div class="summary">
+              <%= post.summary %>
+            </div>
+          </a>
+        </div>
+        <% } %> 
+      <% }) %>
+    <% } else { %>
+      <p class="no-posts-message" data-aos="fade-up">No services are available at the moment.</p>
+    <% } %>
+    
+  </div>
+  <div class="tl-14-cta-vectors">
+    <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-1.png" alt="Vector 1" />
+    <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-2.png" alt="Vector 2" />
+    <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-1.png" alt="Vector 1" />
+    <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-2.png" alt="Vector 2" />
+    <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-3.png" alt="Vector 3" />
+    <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-3.png" alt="Vector 3" />
+  </div>
+</section>
+
+<!-- End of Service Section -->

@@ -1,0 +1,43 @@
+<section class="teacher-section">
+  <div class="container">
+    <div class="heading-section">
+      <h2 class="heading" data-aos="fade-up">
+        Recently Joined <span class="underline">Tutor</span>
+      </h2>
+      <div class="view-more" data-aos="fade-up">
+        <a href="#">
+          View all teachers <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="owl-carousel owl-theme team-carousel">
+
+      <% if (Array.isArray(posts)) { %>
+
+      <% if (posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+
+      <% if (post?.category[0]?.slug === 'teachers') { %>
+
+      <div class="team-member">
+        <img src="<%= post.featured_image || '/public/images/default-teacher.webp' %>" alt="<%= post.title %>" class="team-img" />
+        <div class="team-info">
+          <h3><%= post.title %></h3>
+          <div class="row">
+            <div class="tagline">
+              <li><%= post.tag_line %></li>
+            </div>
+          </div>
+          <div class="btn"><a href="<%= post.detailLink || 'detail.html' %>">Book an Order</a></div>
+        </div>
+      </div>
+
+      <% } %>
+      <% }); %>
+      <% }%>
+
+      <% } %>
+
+    </div>
+  </div>
+</section>

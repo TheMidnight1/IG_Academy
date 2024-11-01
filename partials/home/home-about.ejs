@@ -1,0 +1,54 @@
+<!-- about-section -->
+<% pages.forEach(page => { %>
+  <% if (page.slug === 'about-us') { %>
+  <section class="about-section">
+    <div class="container">
+      <div class="row about-contains">
+        <div class="about-left col-12 col-md-6" data-aos="fade-right">
+
+          <div class="img-container">
+            <img src="<%= page.featured_image ? page.featured_image : '/public/images/about-img.webp' %>" alt="about-img" />
+          </div>
+        </div>
+        <div class="about-right col-12 col-lg-6 col-md-12 px-5" data-aos="fade-left">
+          <div class="tagline">
+            <li><%= page.tag_line %></li>
+          </div>
+          <h2 class="big-title">
+            <%= page.title %>
+          </h2>
+          <div class="summary">
+            <%- truncateWords(page.summary, 50) %>
+          </div>
+          <div class="feature-section my-3">
+            <div class="feature-container">
+              <div class="row">
+                <div class="features col-6">+ Admission and records</div>
+                <div class="features col-6">+ Admission and records</div>
+                <div class="features col-6">+ Admission and records</div>
+                <div class="features col-6">+ Admission and records</div>
+              </div>
+            </div>
+          </div>
+          <div class="facts-and-figure-container">
+            <div class="row">
+              <div class="fact-contains col-md-6 col-12">
+                <span class="fact">23+</span> Years Experience
+              </div>
+              <div class="fact-contains col-md-6 col-12">
+                <span class="fact">23+</span> Years Experience
+              </div>
+              <div class="fact-contains col-md-6 col-12">
+                <span class="fact">23+</span> Years Experience
+              </div>
+              <div class="fact-contains col-md-6 col-12">
+                <span class="fact">23+</span> Years Experience
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% } %> 
+<% }) %> 

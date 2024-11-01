@@ -1,0 +1,36 @@
+
+<% if (testomonials && testomonials.length > 0) { %>
+
+<section class="testomonial-section">
+  <div class="container">
+    <h2 class="heading" data-aos="fade-up">
+      What <span class="underline">Parent's</span> Say
+    </h2>
+    <div class="owl-carousel owl-theme test-carousel">
+      <!-- Testimonial Item 1 -->
+      <% testomonials.forEach(testomonial => { %>
+
+      <div class="testimonial-item" data-aos="fade-up">
+        <blockquote>
+          <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/quote-icon.png" alt="" />
+          <p>
+            <%- testomonial.content %>
+          </p>
+        </blockquote>
+        <div class="person">
+          <img
+          src="<%= testomonial.featured_image %>" 
+          alt="<%= testomonial.name %>" 
+          class="person-img"
+        />       
+        <h3 class="title"><%= testomonial.name %></h3> 
+        <p class="designation"><%= testomonial.designation %></p> 
+      </div>
+      <% }); %>
+
+
+
+    </div>
+  </div>
+</section>
+<% } %>

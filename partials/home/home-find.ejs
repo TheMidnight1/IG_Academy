@@ -1,0 +1,23 @@
+<% if (pages && pages.length > 0) { %>
+<% pages.forEach(page => { %>
+<% if (page?.slug === 'find-us-on') { %>
+    
+    <div class="find-section">
+      <div class="overlay"></div>
+      <div class="content">
+        <h2 class="heading" data-aos="fade-up">
+          <span class="underline"><%= page.title %></span>
+        </h2>
+        <p class="summary" data-aos="fade-up">
+          <%= page.tag_line %>
+        </p>
+        <div class="btn-container mb-5" data-aos="fade-up">
+          <a href="#" class="login-btn" data-bs-toggle="modal" data-bs-target="#studentModal">Call for Tutor</a>
+          <a href="#" class="login-btn" data-bs-toggle="modal" data-bs-target="#teacherModal">Apply for Tutor</a>
+        </div>
+      </div>
+    </div>
+<% } %>
+
+  <% }); %>
+<% } %>

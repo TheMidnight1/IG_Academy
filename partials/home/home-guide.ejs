@@ -1,0 +1,55 @@
+<section class="guide-section">
+  <div class="container">
+    <h2 class="heading" data-aos="fade-up">
+      How it <span class="underline">Works</span>
+    </h2>
+    <div class="tab-buttons-guide">
+      <div class="tab-btn-guide active" data-aos="fade-up" data-target="tutor-content">
+        For Tutor
+      </div>
+      <div class="tab-btn-guide" data-target="student-content" data-aos="fade-up">
+        For Student
+      </div>
+    </div>
+    <div class="tab-content-guide" data-aos="fade-up">
+      
+      <% if (pages && pages.length > 0) { %>
+
+      <!-- Tutor Content Tab -->
+      <div id="tutor-content" class="tab-panel-guide active">
+        <div class="row">
+          <% pages.forEach(page => { %>
+            <% if (page?.slug === 'for-tutor') { %>
+              <div class="guide-card col-12 col-md-6 col-lg-4">
+                <div class="icon-container">
+                  <img src="<%= page.featured_image %>" alt="tut-1" />
+                </div>
+                <div class="title pb-2"><%= page.title %></div>
+                <div class="summary"><%= page.summary %></div>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Student Content Tab -->
+      <div id="student-content" class="tab-panel-guide">
+        <div class="row">
+          <% pages.forEach(page => { %>
+            <% if (page?.slug === 'for-student') { %>
+              <div class="guide-card col-12 col-md-6 col-lg-4">
+                <div class="icon-container">
+                  <img src="<%= page.featured_image %>" alt="std-1" />
+                </div>
+                <div class="title pb-2"><%= page.title %></div>
+                <div class="summary"><%= page.summary %></div>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+      </div>
+
+      <% } %>
+    </div>
+  </div>
+</section>

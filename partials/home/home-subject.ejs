@@ -1,0 +1,28 @@
+<div class="subject-section">
+  <div class="container">
+    <h2 class="heading text-start">
+      <span class="underline" data-aos="fade-up">Find Online Tutor</span> on any Field
+    </h2>
+    <div class="row Subject-contains">
+      <% 
+        // Find the subject category
+        const subjectCategory = categories.find(category => category.slug === 'subject');
+        
+        // Filter child categories of the subject category
+        const childCategories = categories.filter(category => category.parent && category.parent._id.toString() === subjectCategory._id.toString());
+        
+        const limitedChildCategories = childCategories.slice(0, 6);
+
+        if (limitedChildCategories.length > 0) { 
+          %>
+        <% childCategories.forEach(childCategory => { %>
+          <a href="#" class="subject-container col-12 col-md-4 col-lg-3" data-aos="fade-up">
+            <h3 class="title"><%= childCategory.title %></h3>
+          </a>
+        <% }) %>
+      <% } else { %>
+        <p>No subjects found.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
