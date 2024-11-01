@@ -1,75 +1,81 @@
-  <div class="nav py-2 desktop-navigation">
-    <div class="logo-container">
-      <img src="ideagen-academy/images/IdeaGen_Logo.png" alt="ig-acedemy-logo" />
-    </div>
-    <ul class="menu">
-      <li>
-        <a href="index.html">Home</a>
-      </li>
-      <li>
-        <a href="#">Level <i class="fa-solid fa-angle-down"></i></a>
-        <ul class="dropdown">
-          <li>
-            <a href="#" class="d-flex justify-content-between w-100 px-2"
-              >School <i class="fa-solid fa-angle-right"></i
-            ></a>
-            <ul class="dropdown-submenu">
-              <li><a href="student-listing.html">Class 9</a></li>
-              <li><a href="student-listing.html">Class 10</a></li>
-              <li><a href="student-listing.html">Class 8</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" class="d-flex justify-content-between w-100 px-2"
-              >+2 <i class="fa-solid fa-angle-right"></i
-            ></a>
-            <ul class="dropdown-submenu">
-              <li><a href="student-listing.html">Science</a></li>
-              <li><a href="student-listing.html">Management</a></li>
-              <li><a href="student-listing.html">Humanities</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" class="d-flex justify-content-between w-100 px-2"
-              >Batchlor</a
-            >
-            <ul class="dropdown-submenu">
-              <li><a href="student-listing.html">BCA</a></li>
-              <li><a href="student-listing.html">BBM</a></li>
-              <li><a href="student-listing.html">BIM</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" class="d-flex justify-content-between w-100 px-2"
-              >Master</a
-            >
-            <ul class="dropdown-submenu">
-              <li><a href="student-listing.html">MCA</a></li>
-              <li><a href="student-listing.html">MIT</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="student-listing.html">Tutor</a></li>
-      <li><a href="blog-lisitng.html">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="login-container">
-      <div class="btn-container">
-        <a
-          href="javascript:void(0);"
-          class="login-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#studentModal"
-          >Call for Tutor</a
-        >
-        <a
-          href="#"
-          class="login-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#teacherModal"
-          >Apply for Tutor</a
-        >
-      </div>
+<div class="nav py-2 desktop-navigation">
+  <div class="logo-container">
+    <img src="/ideagen-academy/images/IdeaGen_Logo.png" alt="ig-acedemy-logo" />
+  </div>
+  <ul class="menu">
+    <li>
+      <a
+        class="<%= showingpage == 'home' ? 'selected' : '' %>"
+        href="index.html"
+        >Home</a
+      >
+    </li>
+
+    <% let catCount = 0; %> <% const parentCategories =
+    categories.filter(category => !category.parent); %> <%
+    parentCategories.forEach(cat => { %> <% if (catCount < 3) { %>
+    <li class="<%= showingpage === cat.slug ? 'selected' : '' %>">
+      <% const childCategories = categories.filter(category => category.parent
+      && category.parent._id.toString() === cat._id.toString()); %>
+      <a href="/category/<%= cat.slug %>">
+        <%= cat.title %> <% if (childCategories.length > 0) { %>
+        <i class="fa-solid fa-angle-down"></i>
+        <% } %>
+      </a>
+
+      <% if (childCategories.length > 0) { %>
+      <ul class="dropdown">
+        <% childCategories.forEach(childCat => { %> <% const
+        grandChildCategories = categories.filter(category => category.parent &&
+        category.parent._id.toString() === childCat._id.toString()); %>
+        <li>
+          <a
+            href="/category/<%= childCat.slug %>"
+            class="d-flex justify-content-between w-100 px-2"
+          >
+            <%= childCat.title %> <% if (grandChildCategories.length > 0) { %>
+            <i class="fa-solid fa-angle-right"></i>
+            <% } %>
+          </a>
+
+          <% if (grandChildCategories.length > 0) { %>
+          <ul class="dropdown-submenu">
+            <% grandChildCategories.forEach(grandChildCat => { %>
+            <li>
+              <a href="/category/<%= grandChildCat.slug %>"
+                ><%= grandChildCat.title %></a
+              >
+            </li>
+            <% }); %>
+          </ul>
+          <% } %>
+        </li>
+        <% }); %>
+      </ul>
+      <% } %>
+    </li>
+    <% catCount++; %> <% } %> <% }); %>
+
+    <li class="<%= showingpage == 'contact' ? 'selected' : '' %>">
+      <a href="/contact">Contact</a>
+    </li>
+  </ul>
+  <div class="login-container">
+    <div class="btn-container">
+      <a
+        href="javascript:void(0);"
+        class="login-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#studentModal"
+        >Call for Tutor</a
+      >
+      <a
+        href="#"
+        class="login-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#teacherModal"
+        >Apply for Tutor</a
+      >
     </div>
   </div>
+</div>

@@ -3,10 +3,10 @@
   <div class="container">
     <div class="row">
       <div
-        class="company-detail postion-relative col-12 col-md-3"
+        class="company-detail postion-relative col-lg-3 col-md-6"
         data-aos="fade-up"
       >
-        <div class="footer-title">Goodwill Company</div>
+        <div class="footer-title">IG Acedemy</div>
         <div class="line"></div>
         <% pages.forEach(page => { %> <% if (page.slug === 'about-us') { %>
         <p class="gray-text-dark"><%- truncateWords(page.content, 40) %></p>
@@ -28,101 +28,63 @@
       </div>
 
       <div
-        class="latest-news postion-relative col-12 col-md-4"
-        data-aos="fade-up"
-      >
-        <div class="footer-title">Recent News</div>
-        <div class="line"></div>
-        <% let blogCount = 0; %> <% posts.forEach(post => { %> <% if
-        (post.category[0].slug === 'blog' && blogCount < 3) { %>
-        <div class="row pb-2">
-          <a href="/post/<%= post._id %>">
-            <div class="image-container col-6 col-md-5">
-              <img
-                src="<%= post.featured_image ? post.featured_image : './goodwill-cleaning/images/default.png' %>"
-                alt="<%= post.title %>"
-                class="w-100"
-              />
-            </div>
-            <div class="col-6 col-md-7">
-              <div class="heading"><%= post.title %></div>
-              <span class="date-line gray-text"
-                ><%= post.createdAt.toDateString() %></span
-              >
-            </div>
-          </a>
-        </div>
-        <% } %> <% }) %>
-
-        
-      </div>
-
-      <div
-        class="quick-links postion-relative col-12 col-md-2"
+        class="quick-links postion-relative col-12 col-lg-3 col-md-6"
         data-aos="fade-up"
       >
         <div class="footer-title">Menu</div>
         <div class="line"></div>
         <ul>
-          <li class="selected"><a href="/">Home</a></li>
+          <li class="selected"><a href="#">Home</a></li>
+          <% let catCount = 0; %> <% const parentCategories =
+          categories.filter(category => !category.parent); %> <%
+          parentCategories.forEach(cat => { %> <% if (catCount < 3) { %>
+          <li class="<%= showingpage === cat.slug ? 'selected' : '' %>">
+            <a href="/category/<%= cat.slug %>">
+              <%= cat.title %>
+            </a>
+            <% catCount++; %> <% } %> <% }); %>
+          </li>
 
-          <% let pageCount = 0; %>
-          <% pages.forEach(page => { %> 
-            <% if (page.slug === 'about-us' && pageCount < 1) { %>
-              <li><a href="/page/<%= page.slug %>">About</a></li>
-              <% pageCount++; %>
-            <% } %>
-          <% }) %>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
 
-
+      <div
+        class="quick-links postion-relative col-lg-3 col-md-6"
+        data-aos="fade-up"
+      >
+        <div class="footer-title">quick-links</div>
+        <div class="line"></div>
+        <ul>
           <% let staticPageCount = 0; %>
           <% pages.forEach(page => { %> 
-            <% if (staticPageCount < 1) { %>
+            <% if (staticPageCount < 5) { %>
               <li><a href="/page/<%= page.slug %>"><%= page.title %></a></li>
               <% pageCount++; %>
             <% } %>
           <% }) %>
-
-          <% let catCount = 0; %>
-          <% categories.forEach(cat => { %> 
-            <% if (catCount < 3) { %>
-              <li><a href="/category/<%= cat.slug %>"><%= cat.title %></a></li>
-              <% catCount++; %>
-            <% } %>
-          <% }) %>
-
-          <li><a href="/price">Pricing</a></li>
-
-          <% let catCount2 = 0; %>
-          <% categories.forEach(cat => { %> 
-            <% if (catCount2 < 4 && catCount2 > 3) { %>
-              <li><a href="/<%= cat.slug %>"><%= cat.name %></a></li>
-              <% } %>
-              <% catCount2++; %>
-          <% }) %>
-
-          <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
 
-      <div class="contacts postion-relative col-12 col-md-3" data-aos="fade-up">
+      <div
+        class="contacts postion-relative col-12 col-lg-3 col-md-6"
+        data-aos="fade-up"
+      >
         <div class="footer-title">Have a question</div>
         <div class="line"></div>
         <div class="row pb-3 align-items-center">
           <i class="col-2 footer-icon-contact fa-solid fa-location-dot"></i
           ><span class="col-10 footer-contact address"
-            >30 Gloucester rd Hurstville, Austrila</span
+            >203 Fake St. Mountain View, San Francisco, California, USA</span
           >
         </div>
         <div class="row pb-3 align-items-center">
           <i class="col-2 footer-icon-contact fa-solid fa-phone"></i>
-          <span class="col-10 footer-contact phone">+0420900310
-            </span>
+          <span class="col-10 footer-contact phone">+2 392 3929 210</span>
         </div>
         <div class="row pb-3 align-items-center">
           <i class="col-2 footer-icon-contact fa-solid fa-envelope"></i>
-          <span class="col-10 footer-contact email"> 
-            anilsah37618@gmail.com+</span>
+          <span class="col-10 footer-contact email"> info@yourdomain.com</span>
         </div>
       </div>
     </div>
@@ -134,5 +96,252 @@
     >&nbsp; Site by: <a href="#">CyBurning</a>
   </div>
 </footer>
+
+ <!-- Student Form Modal -->
+ <div
+ class="modal fade"
+ id="studentModal"
+ tabindex="-1"
+ aria-labelledby="studentModalLabel"
+ aria-hidden="true"
+>
+ <div class="modal-dialog modal-lg modal-dialog-centered">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="studentModalLabel">Call for Tutor</h5>
+       <button
+         type="button"
+         class="btn-close"
+         data-bs-dismiss="modal"
+         aria-label="Close"
+       ></button>
+     </div>
+     <div class="modal-body">
+       <form id="studentForm">
+         <div class="mb-3">
+           <label for="studentName" class="form-label">Name</label>
+           <input
+             type="text"
+             class="form-control"
+             id="studentName"
+             name="studentName"
+             required
+           />
+         </div>
+         <div class="mb-3">
+           <label for="studentLevel" class="form-label">Level</label>
+           <input
+             type="text"
+             class="form-control"
+             id="studentLevel"
+             name="studentLevel"
+             required
+           />
+         </div>
+
+         <div class="mb-3">
+           <label for="studentSubject" class="form-label"
+             >Subject for Tutor</label
+           >
+           <input
+             type="text"
+             class="form-control"
+             id="studentSubject"
+             name="studentSubject"
+             required
+           />
+         </div>
+
+         <div class="row">
+           <div class="col-md-6 mb-3">
+             <label for="studentDistrict" class="form-label"
+               >District</label
+             >
+             <input
+               type="text"
+               class="form-control"
+               id="studentDistrict"
+               name="studentDistrict"
+               required
+             />
+           </div>
+           <div class="col-md-6 mb-3">
+             <label for="studentLocation" class="form-label"
+               >Location</label
+             >
+             <input
+               type="text"
+               class="form-control"
+               id="studentLocation"
+               name="studentLocation"
+               required
+             />
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-md-6 mb-3">
+             <label for="studentPhone" class="form-label"
+               >Phone Number</label
+             >
+             <input
+               type="tel"
+               class="form-control"
+               id="studentPhone"
+               name="studentPhone"
+               required
+             />
+           </div>
+           <div class="col-md-6 mb-3">
+             <label for="studentEmail" class="form-label">Email</label>
+             <input
+               type="email"
+               class="form-control"
+               id="studentEmail"
+               name="studentEmail"
+               required
+             />
+           </div>
+         </div>
+         <div class="mb-3">
+           <label for="studentMessage" class="form-label">Message</label>
+           <textarea
+             class="form-control"
+             id="studentMessage"
+             name="studentMessage"
+             rows="3"
+           ></textarea>
+         </div>
+         <button type="submit" class="btn btn-primary">Submit</button>
+       </form>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- student form -->
+
+<!-- teacher form -->
+    <!-- Teacher Form Modal -->
+    <div
+      class="modal fade"
+      id="teacherModal"
+      tabindex="-1"
+      aria-labelledby="teacherModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="teacherModalLabel">Apply for Tutor</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="teacherForm">
+              <div class="mb-3">
+                <label for="teacherName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="teacherName"
+                  name="teacherName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="teacherLevel" class="form-label">Level</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="teacherLevel"
+                  name="teacherLevel"
+                  required
+                />
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="teacherDistrict" class="form-label"
+                    >District</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="teacherDistrict"
+                    name="teacherDistrict"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="teacherLocation" class="form-label"
+                    >Location</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="teacherLocation"
+                    name="teacherLocation"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="teacherPhone" class="form-label"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="teacherPhone"
+                    name="teacherPhone"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="teacherEmail" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="teacherEmail"
+                    name="teacherEmail"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="teacherCV" class="form-label">Upload CV</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="teacherCV"
+                  name="teacherCV"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="qualificationCert" class="form-label"
+                  >Qualification Certificate</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="qualificationCert"
+                  name="qualificationCert"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- teacher form -->
 
 <%- include('./scripts') %>
