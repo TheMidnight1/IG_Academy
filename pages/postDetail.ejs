@@ -1,94 +1,417 @@
-<title>Ig Academy </title>
-
+<title>Ig Academy</title>
 
 <!-- Include stylesheets and links -->
 <%- include('../partials/header/links') %>
-
 
 <!-- Desktop Navigation -->
 <%- include('../partials/header/desktop_navigation') %>
 
 <!-- Mobile Navigation -->
 <%- include('../partials/header/mobile_navigation') %>
+
+<div class="breadcrumb">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-md-6">
+        <div class="banner-txt">
+          <% let title = ""; %> <% categoryName.forEach(cat => { %> <% if (cat
+          === "Student") { title = "Student Detail"; } %> <% if (cat ===
+          "Teacher") { title = "Teacher Detail"; } %> <% }) %>
+          <span class="tl-breadcrumb-title"><%= title %></span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <ul class="tl-breadcrumb-nav d-flex">
+          <li><a href="index.html">Home</a></li>
+          <li class="current-page">
+            <i class="fa-solid fa-angle-right"></i>
+            <span><%= categoryName[0] %></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="listing">
   <div class="container">
     <div class="row detail-container">
-      <% if(post) { %>
-      <div class="col-12 col-md-6 col-lg-7 detail-right">
-        <h1 class="subtitle">
-          <%= post.title %>
-
-        </h1>
+      <div class="col-12 col-md-5 col-lg-7 detail-right">
+        <h1 class="subtitle"><%= post.title %></h1>
         <div class="date-line pb-3">
-          <% 
-            const publishedDate = new Date(post.published_date); 
-            
-            const options = { year: 'numeric', month: 'long', day: 'numeric' }; 
-            
-            const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
-            %>
+          <% const publishedDate = new Date(post.published_date); const options
+          = { year: 'numeric', month: 'long', day: 'numeric' }; const
+          formattedDate = publishedDate.toLocaleDateString('en-US', options); %>
           <%= formattedDate %>
         </div>
-        <div class="img-containers mb-3">
-          <img src="<%= post.featured_image %>">
+
+        <div class="subject-containers mb-3">
+          <ul>
+            <% let count = 0; %> <% categoryName.forEach(cat => { %> <% if
+            (count < 3) { %>
+            <li class="col-3"><%= cat %></li>
+            <% count++; %> <% } %> <% }) %>
+          </ul>
         </div>
+
         <div class="post-container">
-          <!-- <div class="subtitle pb-3">About <%= post?.category[0]?.title%></div> -->
-          <div class="info">
-            <%- post.content %>
-          </div>
+          <% let aboutTitle = ""; %> <% categoryName.forEach(cat => { %> <% if
+          (cat === "student") { aboutTitle = "About Student"; } %> <% if (cat
+          === "teacher") { aboutTitle = "About Teacher"; } %> <% }) %>
+          <div class="subtitle pb-3"><%= aboutTitle %></div>
+          <div class="info"><%- post.content %></div>
         </div>
       </div>
-      <% }%>
 
-      <% if(morePosts && morePosts.length > 0) { %>
-      <div class="col-12 col-md-5 col-lg-4 detail-left">
+      <div class="col-12 col-md-6 col-lg-4 detail-left">
+        <div class="info-containers mb-3">
+          <div class="price mb-3">NRs. 25000</div>
+          <div class="information-details">
+            <div class="row">
+              <div class="title-info">
+                <i class="fa-solid fa-house"></i> &nbsp;
+                <span class="title"> Tuition Type </span>
+              </div>
+              <div class="info-container">
+                <div class="info">Home Tuition</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="title-info">
+                <i class="fa-solid fa-house"></i> &nbsp;
+                <span class="title"> Tutoring Days </span>
+              </div>
+              <div class="info-container">
+                <div class="info">Mon - Fri</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="title-info">
+                <i class="fa-solid fa-house"></i> &nbsp;
+                <span class="title"> Level </span>
+              </div>
+              <div class="info-container">
+                <div class="info">Class 9</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="title-info">
+                <i class="fa-solid fa-house"></i> &nbsp;
+                <span class="title"> Location </span>
+              </div>
+              <div class="info-container">
+                <div class="info">Kathmandu, Nepal</div>
+              </div>
+            </div>
+          </div>
+         
+            <% if (title == "Student Detail") { %>
+          <div class="btn" href="javascript:void(0);"
+          data-bs-toggle="modal"
+          data-bs-target="#studentModalId">Enquiry Now</div>
+          <% } else if(title == "Teacher Detail") { %>
+            <div class="btn" href="javascript:void(0);"
+          data-bs-toggle="modal"
+          data-bs-target="#teacherModalId">Enquiry Now</div>
+          <%} %> 
+        </div>
+        <% if(morePosts && morePosts.length > 0) { %>
 
         <div class="more-cointainer">
-          <div class="subtitle mb-2">More Blog</div>
+          <div class="subtitle mb-2">More <%= categoryName[0] %></div>
 
           <div class="col-12">
             <% morePosts.forEach(morePost => { %>
 
             <div class="blog-list-card" data-aos="fade-up">
               <a href="/post/<%= morePost._id  %>" class="img-container">
-                <img src="<%= morePost.featured_image %>" alt="">
+                <img src="<%= morePost.featured_image %>" alt="" />
               </a>
               <a href="/post/<%= morePost._id  %>" class="list-contains">
-                <div class="date-line"><i class="fa-regular fa-clock"></i>
-                  <% 
-            const publishedDate = new Date(post.published_date); 
-            
-            const options = { year: 'numeric', month: 'long', day: 'numeric' }; 
-            
-            const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
-            %>
-          <%= formattedDate %>
+                <div class="date-line">
+                  <i class="fa-regular fa-clock"></i>
+                  <% const publishedDate = new Date(post.published_date); const
+                  options = { year: 'numeric', month: 'long', day: 'numeric' };
+                  const formattedDate =
+                  publishedDate.toLocaleDateString('en-US', options); %> <%=
+                  formattedDate %>
                 </div>
                 <div class="title"><%= morePost.title %></div>
                 <div class="summary"><%= morePost.sumamry %></div>
-                <div class="view-more"><a href="/post/<%= morePost._id  %>">Read More <i class="fa-solid fa-arrow-right"></i></a></div>
+                <div class="view-more">
+                  <a href="/post/<%= morePost._id  %>"
+                    >Read More <i class="fa-solid fa-arrow-right"></i
+                  ></a>
+                </div>
               </a>
             </div>
             <% }) %>
-
           </div>
-
         </div>
-      </div>
-      <% }%>
 
-      
+        <% }%>
+      </div>
     </div>
   </div>
 </section>
 
+ <!-- Student Form Modal with id -->
+ <div
+ class="modal fade"
+ id="studentModalID"
+ tabindex="-1"
+ aria-labelledby="studentModalLabel"
+ aria-hidden="true"
+>
+ <div class="modal-dialog modal-lg modal-dialog-centered">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="studentModalLabel">Call for Tutor</h5>
+       <button
+         type="button"
+         class="btn-close"
+         data-bs-dismiss="modal"
+         aria-label="Close"
+       ></button>
+     </div>
+     <div class="modal-body">
+       <form id="studentForm">
+
+        <input type="hidden" value="<%= post.title %>" id="post_id" name="post_id">
+
+         <div class="mb-3">
+           <label for="studentName" class="form-label">Name</label>
+           <input
+             type="text"
+             class="form-control"
+             id="studentName"
+             name="studentName"
+             required
+           />
+         </div>
+         <div class="mb-3">
+           <label for="studentLevel" class="form-label">Level</label>
+           <input
+             type="text"
+             class="form-control"
+             id="studentLevel"
+             name="studentLevel"
+             required
+           />
+         </div>
+
+         <div class="mb-3">
+           <label for="studentSubject" class="form-label"
+             >Subject for Tutor</label
+           >
+           <input
+             type="text"
+             class="form-control"
+             id="studentSubject"
+             name="studentSubject"
+             required
+           />
+         </div>
+
+         <div class="row">
+           <div class="col-md-6 mb-3">
+             <label for="studentDistrict" class="form-label"
+               >District</label
+             >
+             <input
+               type="text"
+               class="form-control"
+               id="studentDistrict"
+               name="studentDistrict"
+               required
+             />
+           </div>
+           <div class="col-md-6 mb-3">
+             <label for="studentLocation" class="form-label"
+               >Location</label
+             >
+             <input
+               type="text"
+               class="form-control"
+               id="studentLocation"
+               name="studentLocation"
+               required
+             />
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-md-6 mb-3">
+             <label for="studentPhone" class="form-label"
+               >Phone Number</label
+             >
+             <input
+               type="tel"
+               class="form-control"
+               id="studentPhone"
+               name="studentPhone"
+               required
+             />
+           </div>
+           <div class="col-md-6 mb-3">
+             <label for="studentEmail" class="form-label">Email</label>
+             <input
+               type="email"
+               class="form-control"
+               id="studentEmail"
+               name="studentEmail"
+               required
+             />
+           </div>
+         </div>
+         <div class="mb-3">
+           <label for="studentMessage" class="form-label">Message</label>
+           <textarea
+             class="form-control"
+             id="studentMessage"
+             name="studentMessage"
+             rows="3"
+           ></textarea>
+         </div>
+         <button type="submit" class="btn btn-primary">Submit</button>
+       </form>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- student form -->
+
+<!-- teacher form -->
+    <!-- Teacher Form Modal with id-->
+    <div
+      class="modal fade"
+      id="teacherModalId"
+      tabindex="-1"
+      aria-labelledby="teacherModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="teacherModalLabel">Apply for Tutor</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="teacherForm">
+              <input type="hidden" value="<%= post.title %>" id="post_id" name="post_id">
+              <div class="mb-3">
+                <label for="teacherName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="teacherName"
+                  name="teacherName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="teacherLevel" class="form-label">Level</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="teacherLevel"
+                  name="teacherLevel"
+                  required
+                />
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="teacherDistrict" class="form-label"
+                    >District</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="teacherDistrict"
+                    name="teacherDistrict"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="teacherLocation" class="form-label"
+                    >Location</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="teacherLocation"
+                    name="teacherLocation"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="teacherPhone" class="form-label"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="teacherPhone"
+                    name="teacherPhone"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="teacherEmail" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="teacherEmail"
+                    name="teacherEmail"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="teacherCV" class="form-label">Upload CV</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="teacherCV"
+                  name="teacherCV"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="qualificationCert" class="form-label"
+                  >Qualification Certificate</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="qualificationCert"
+                  name="qualificationCert"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- teacher form -->
 
 <!-- Include Footer -->
 <%- include('../partials/footer/footer') %>
 
 <!-- Include Scripts -->
 <%- include('../partials/footer/scripts') %>
-</body>
-
-</html>

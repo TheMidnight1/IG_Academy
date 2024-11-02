@@ -1166,7 +1166,7 @@ footer li {
     font-size: 12px;
 }
 
-.btn-container .btn:hover{
+.btn:hover{
     background-color: var(--brand-color-secondary);
     color: #fff;
 }

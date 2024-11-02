@@ -30,7 +30,7 @@
           <li><a href="/">Home</a></li>
           <li class="current-page">
             <i class="fa-solid fa-angle-right"></i>
-            <span>Blog Details</span>
+            <span><%= category.title %></span>
           </li>
         </ul>
       </div>
@@ -45,11 +45,16 @@
         <%posts.forEach(post=>{ %>
       <div class="col-12">
         <div class="list-card" data-aos="fade-up">
-          <a href="#" class="list-contains">
+          <a href="/post/<%= post._id %>" class="list-contains">
             <div class="title">
               <%= post.title %>
             </div>
-            <div class="date-line pb-3">24 April 2024</div>
+            <div class="date-line pb-3"><% 
+              const publishedDate = new Date(post.published_date);
+              const options = { year: 'numeric', month: 'long', day: 'numeric' };
+              const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
+            %>
+            <%= formattedDate %></div>
             <div class="row listing-requriement">
               <% post.customFields.forEach(field=> { %>
               <div class="post-info">
@@ -93,6 +98,3 @@
 
 <!-- Include Scripts -->
 <%- include('../partials/footer/scripts') %>
-</body>
-
-</html>

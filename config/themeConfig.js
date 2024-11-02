@@ -1,10 +1,12 @@
 module.exports = {
     CUSTOM_DETAIL_PAGE: {
-        "blog": 'page-blog',
+        "blog": 'blog-detail',
+        "services": 'blog-detail',
         // Add more key-value pairs as needed
     },
     
     CUSTOM_LISTING_PAGE: {
-        "blog" : 'blog-lising',
+        "blog" : 'blog-listing',
+        "services" : 'blog-listing',
     }
 };
