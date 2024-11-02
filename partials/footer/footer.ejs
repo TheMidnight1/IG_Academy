@@ -60,7 +60,7 @@
           <% pages.forEach(page => { %> 
             <% if (staticPageCount < 5) { %>
               <li><a href="/page/<%= page.slug %>"><%= page.title %></a></li>
-              <% pageCount++; %>
+              <% staticPageCount++; %>
             <% } %>
           <% }) %>
         </ul>
