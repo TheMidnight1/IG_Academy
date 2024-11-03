@@ -23,27 +23,31 @@
           <div class="feature-section my-3">
             <div class="feature-container">
               <div class="row">
-                <div class="features col-6">+ Admission and records</div>
-                <div class="features col-6">+ Admission and records</div>
-                <div class="features col-6">+ Admission and records</div>
-                <div class="features col-6">+ Admission and records</div>
+                <% for (let i = 1; i <= 4; i++) { %>
+                  <% page.customFields.forEach(field => { %>
+                    <% if (field.fieldName === `Field_${i}`) { %>
+                      <div class="features col-6"> <%= field.value %></div>
+                    <% } %>
+                  <% }); %>
+                <% } %> 
               </div>
+              
             </div>
           </div>
           <div class="facts-and-figure-container">
             <div class="row">
-              <div class="fact-contains col-md-6 col-12">
-                <span class="fact">23+</span> Years Experience
-              </div>
-              <div class="fact-contains col-md-6 col-12">
-                <span class="fact">23+</span> Years Experience
-              </div>
-              <div class="fact-contains col-md-6 col-12">
-                <span class="fact">23+</span> Years Experience
-              </div>
-              <div class="fact-contains col-md-6 col-12">
-                <span class="fact">23+</span> Years Experience
-              </div>
+
+
+              <% for (let i = 5; i <= 8; i++) { %>
+                <% page.customFields.forEach(field => { %>
+                  <% if (field.fieldName === `Field_${i}`) { %>
+                    <div class="fact-contains col-md-6 col-12">
+                      <span class="fact"><%= field.value %></span> Years Experience
+                    </div>
+                  <% } %>
+                <% }); %>
+              <% } %> 
+             
             </div>
           </div>
         </div>
