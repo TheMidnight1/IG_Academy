@@ -1,0 +1,68 @@
+<title>Ig Academy </title>
+
+
+<!-- Include stylesheets and links -->
+<%- include('../partials/header/links') %>
+
+
+<!-- Desktop Navigation -->
+<%- include('../partials/header/desktop_navigation') %>
+
+<!-- Mobile Navigation -->
+<%- include('../partials/header/mobile_navigation') %>
+
+<div class="breadcrumb">
+    <div class="container">
+      <div class="row align-items-end">
+        <div class="col-md-6">
+          <div class="banner-txt">
+            <span class="tl-breadcrumb-title"><%= pageTitle %></span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="tl-breadcrumb-nav d-flex">
+            <li><a href="index.html">Home</a></li>
+            <li class="current-page">
+              <i class="fa-solid fa-angle-right"></i>
+              <span><%= pageTitle %></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<section class="listing">
+  <div class="container">
+    <div class="row detail-container">
+    
+      <div class="col-12 detail-right">
+        <h1 class="subtitle">
+            <%= pageTitle %>
+
+        </h1>
+        
+        <div class="img-containers mb-3">
+          <img src="<%= background_image %>">
+        </div>
+        <div class="post-container">
+          <!-- <div class="subtitle pb-3">About <%= post?.category[0]?.title%></div> -->
+          <div class="info">
+            <%- content %>
+          </div>
+        </div>
+      </div>
+      <% }%>
+
+      
+    </div>
+  </div>
+</section>
+
+
+<!-- Include Footer -->
+<%- include('../partials/footer/footer') %>
+
+<!-- Include Scripts -->
+<%- include('../partials/footer/scripts') %>

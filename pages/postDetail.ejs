@@ -127,28 +127,39 @@
           <div class="col-12">
             <% morePosts.forEach(morePost => { %>
 
-            <div class="blog-list-card" data-aos="fade-up">
-              <a href="/post/<%= morePost._id  %>" class="img-container">
-                <img src="<%= morePost.featured_image %>" alt="" />
-              </a>
-              <a href="/post/<%= morePost._id  %>" class="list-contains">
-                <div class="date-line">
-                  <i class="fa-regular fa-clock"></i>
-                  <% const publishedDate = new Date(post.published_date); const
-                  options = { year: 'numeric', month: 'long', day: 'numeric' };
-                  const formattedDate =
-                  publishedDate.toLocaleDateString('en-US', options); %> <%=
-                  formattedDate %>
+              <div class="col-12">
+                <div class="list-card" data-aos="fade-up">
+                  <a href="/post/<%= post._id %>" class="list-contains">
+                    <div class="title">
+                      <%= morePost.title %>
+                    </div>
+                    <div class="date-line pb-3"><% 
+                      const publishedDate = new Date(morePost.published_date);
+                      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                      const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
+                    %>
+                    <%= formattedDate %></div>
+                    <div class="row listing-requriement">
+                      <% morePost.customFields.forEach(field=> { %>
+                      <div class="post-info">
+                        <div class="icon-container">
+                          <i class="fa-solid fa-house"></i>
+                        </div>
+                        <div class="requirements-info">
+                          <div class="subtitle">
+                            <%= field.fieldName %>
+                          </div>
+                          <div class="info"><%= field.value %></div>
+                        </div>
+                      </div>
+                      <% }) %>
+                    </div>
+                    <div class="btn-container">
+                      <a href="/post/<%= morePost._id %>" class="btn">View Details </a>
+                    </div>
+                  </a>
                 </div>
-                <div class="title"><%= morePost.title %></div>
-                <div class="summary"><%= morePost.sumamry %></div>
-                <div class="view-more">
-                  <a href="/post/<%= morePost._id  %>"
-                    >Read More <i class="fa-solid fa-arrow-right"></i
-                  ></a>
-                </div>
-              </a>
-            </div>
+              </div>
             <% }) %>
           </div>
         </div>
