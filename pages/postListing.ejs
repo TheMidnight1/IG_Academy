@@ -81,14 +81,21 @@
 
 
       <div class="pagination" data-aos="fade-up">
-        <a href="#">&laquo;</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">&raquo;</a>
+        <% if (pagination.hasPrevPage) { %>
+          <a href="?page=<%= pagination.prevPage %>&limit=<%= limit %>">&laquo; Previous</a>
+        <% } %>
+        
+        <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+          <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= pagination.currentPage === i ? 'active' : '' %>">
+            <%= i %>
+          </a>
+        <% } %>
+      
+        <% if (pagination.hasNextPage) { %>
+          <a href="?page=<%= pagination.nextPage %>&limit=<%= limit %>">Next &raquo;</a>
+        <% } %>
       </div>
+      
     </div>
   </div>
 </section>

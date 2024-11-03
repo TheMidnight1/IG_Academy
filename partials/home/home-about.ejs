@@ -1,58 +1,90 @@
 <!-- about-section -->
-<% pages.forEach(page => { %>
-  <% if (page.slug === 'about-us') { %>
-  <section class="about-section">
-    <div class="container">
-      <div class="row about-contains">
-        <div class="about-left col-12 col-md-6" data-aos="fade-right">
-
-          <div class="img-container">
-            <img src="<%= page.featured_image ? page.featured_image : '/public/images/about-img.webp' %>" alt="about-img" />
-          </div>
+<% pages.forEach(page => { %> <% if (page.slug === 'about-us') { %>
+<section class="about-section">
+  <div class="container">
+    <div class="row about-contains">
+      <div class="about-left col-12 col-md-6" data-aos="fade-right">
+        <div class="img-container">
+          <img
+            src="<%= page.featured_image ? page.featured_image : '/public/images/about-img.webp' %>"
+            alt="about-img"
+          />
         </div>
-        <div class="about-right col-12 col-lg-6 col-md-12 px-5" data-aos="fade-left">
-          <div class="tagline">
-            <li><%= page.tag_line %></li>
-          </div>
-          <h2 class="big-title">
-            <%= page.title %>
-          </h2>
-          <div class="summary">
-            <%- truncateWords(page.summary, 50) %>
-          </div>
-          <div class="feature-section my-3">
-            <div class="feature-container">
-              <div class="row">
-                <% for (let i = 1; i <= 4; i++) { %>
-                  <% page.customFields.forEach(field => { %>
-                    <% if (field.fieldName === `Field_${i}`) { %>
-                      <div class="features col-6"> <%= field.value %></div>
-                    <% } %>
-                  <% }); %>
-                <% } %> 
+      </div>
+      <div
+        class="about-right col-12 col-lg-6 col-md-12 px-5"
+        data-aos="fade-left"
+      >
+        <div class="tagline">
+          <li><%= page.tag_line %></li>
+        </div>
+        <h2 class="big-title"><%= page.title %></h2>
+        <div class="summary"><%- truncateWords(page.summary, 50) %></div>
+        <div class="feature-section my-3">
+          <div class="feature-container">
+            <div class="row">
+              <div class="feature-container">
+                <div class="row">
+                  <% page.customFields.forEach(field => { %> <% if
+                  (field.fieldName === 'Field_1') { %>
+                  <div class="features col-6"><%= field.value %></div>
+                  <% } else if (field.fieldName === 'Field_2') { %>
+                  <div class="features col-6"><%= field.value %></div>
+                  <% } else if (field.fieldName === 'Field_3') { %>
+                  <div class="features col-6"><%= field.value %></div>
+                  <% } else if (field.fieldName === 'Field_4') { %>
+                  <div class="features col-6"><%= field.value %></div>
+                  <% } %> <% }); %>
+                </div>
               </div>
-              
             </div>
           </div>
-          <div class="facts-and-figure-container">
-            <div class="row">
-
-
-              <% for (let i = 5; i <= 8; i++) { %>
-                <% page.customFields.forEach(field => { %>
-                  <% if (field.fieldName === `Field_${i}`) { %>
-                    <div class="fact-contains col-md-6 col-12">
-                      <span class="fact"><%= field.value %></span> Years Experience
-                    </div>
-                  <% } %>
-                <% }); %>
-              <% } %> 
-             
+        </div>
+        <div class="facts-and-figure-container">
+          <div class="row">
+            <% 
+            let field5Label = '', field6Label = '', field7Label = '', field8Label = ''; 
+        
+            // First, loop to assign labels for each field
+            page.customFields.forEach(field => { 
+              if (field.fieldName === 'Field_5_Label') { 
+                field5Label = field.value; 
+              } else if (field.fieldName === 'Field_6_Label') { 
+                field6Label = field.value; 
+              } else if (field.fieldName === 'Field_7_Label') { 
+                field7Label = field.value; 
+              } else if (field.fieldName === 'Field_8_Label') { 
+                field8Label = field.value; 
+              }
+            }); 
+          %>
+        
+            <div class="facts-and-figure-container">
+              <div class="row">
+                <% page.customFields.forEach(field => { %> <% if
+                (field.fieldName === 'Field_5') { %>
+                <div class="fact-contains col-md-6 col-12">
+                  <span class="fact"><%= field.value %></span><%= field5Label %>
+                </div>
+                <% } else if (field.fieldName === 'Field_6') { %>
+                <div class="fact-contains col-md-6 col-12">
+                  <span class="fact"><%= field.value %></span> <%= field6Label %>
+                </div>
+                <% } else if (field.fieldName === 'Field_7') { %>
+                <div class="fact-contains col-md-6 col-12">
+                  <span class="fact"><%= field.value %></span> <%= field7Label %>
+                </div>
+                <% } else if (field.fieldName === 'Field_8') { %>
+                <div class="fact-contains col-md-6 col-12">
+                  <span class="fact"><%= field.value %></span> <%= field8Label %>
+                </div>
+                <% } %> <% }); %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <% } %> 
-<% }) %> 
+  </div>
+</section>
+<% } %> <% }) %>
