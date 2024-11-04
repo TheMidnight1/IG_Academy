@@ -124,10 +124,11 @@
         <div class="more-cointainer">
           <div class="subtitle mb-2">More <%= categoryName[0] %></div>
 
-          <div class="col-12">
-            <% morePosts.forEach(morePost => { %>
+          
+          <% morePosts.forEach(morePost => { %>
+            <div class="col-12 mb-2">
 
-              <div class="col-12">
+              
                 <div class="list-card" data-aos="fade-up">
                   <a href="/post/<%= post._id %>" class="list-contains">
                     <div class="title">
@@ -139,8 +140,8 @@
                       const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
                     %>
                     <%= formattedDate %></div>
-                    <div class="row listing-requriement">
-                      <% morePost.customFields.forEach(field=> { %>
+                    <div class="row listing-requriement w-100">
+                      <% morePosts.customFields.forEach(field=> { %>
                       <div class="post-info">
                         <div class="icon-container">
                           <i class="fa-solid fa-house"></i>
@@ -159,9 +160,9 @@
                     </div>
                   </a>
                 </div>
+              
               </div>
             <% }) %>
-          </div>
         </div>
 
         <% }%>
