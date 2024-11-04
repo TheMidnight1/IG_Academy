@@ -1,48 +1,44 @@
 <% if (posts && posts.length > 0) { %>
+  <section class="teacher-section">
+    <div class="container">
+      <div class="heading-section">
+        <h2 class="heading" data-aos="fade-up">
+          Latest <span class="underline">News Blogs & Articles</span>
+        </h2>
+        <div class="view-more" data-aos="fade-up">
+          <a href="blog-listing.html">
+            View all blogs <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <% posts.forEach(post => { %> 
+          <% if (post?.category[0].slug === 'blog') { %>
+            <div class="blog-card col-12 col-lg-6" data-aos="fade-up">
+              <a href="/post/<%= post._id %>" class="img-container">
+                <img src="<%= post.featured_image %>" alt="<%= post.title %>" />
+              </a>
+              <a href="/post/<%= post._id %>" class="blog-contains">
+                <% 
+                  // Create a new Date object from the published_date
+                  const publishedDate = new Date(post.published_date); 
 
-<section class="teacher-section">
-  <div class="container">
-    <div class="heading-section">
-      <h2 class="heading" data-aos="fade-up">
-        Latest <span class="underline">News Blogs & Articles</span>
-      </h2>
-      <div class="view-more" data-aos="fade-up">
-        <a href="blog-lisitng.html">
-          View all blogs <i class="fa-solid fa-arrow-right"></i
-        ></a>
+                  // Define options for formatting the date
+                  const options = { year: 'numeric', month: 'long', day: 'numeric' }; 
+
+                  // Format the date to a readable string
+                  const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
+                %>
+                <div class="date-line"><%= formattedDate %></div>
+                <div class="title"><%= post.title %></div>
+                <span class="view-more">
+                  View all blogs <i class="fa-solid fa-arrow-right"></i>
+                </span>
+              </a>
+            </div>
+          <% } %>
+        <% }); %>
       </div>
     </div>
-    <div class="row">
-      <% posts.forEach(post => { %> <% if (post?.category[0].slug === 'blog') {
-      %>
-
-      <div class="blog-card col-12 col-lg-6" data-aos="fade-up">
-        <a href="blog-detail.html" class="img-conainer">
-          <img src="<%= post.featured_image%>" alt="<%= post.title%>" />
-        </a>
-        <a href="blog-detail.html" class="blog-contains">
-          <% 
-// Create a new Date object from the published_date
-const publishedDate = new Date(post.published_date); 
-
-// Define options for formatting the date
-const options = { year: 'numeric', month: 'long', day: 'numeric' }; 
-
-// Format the date to a readable string
-const formattedDate = publishedDate.toLocaleDateString('en-US', options); 
-%>
-
-          <div class="date-line"><%= formattedDate %></div>
-          <div class="title"><%= post.title%></div>
-
-          <span class="view-more">
-            View all blogs <i class="fa-solid fa-arrow-right"></i
-          ></span>
-        </a>
-      </div>
-      <% } %> <% }); %>
-    </div>
-  </div>
-</section>
-
+  </section>
 <% } %>
