@@ -17,10 +17,10 @@
       %>
 
       <div class="blog-card col-12 col-lg-6" data-aos="fade-up">
-        <a href="blog-detail.html" class="img-conainer">
+        <a href="/post/<% post._id>" class="img-conainer">
           <img src="<%= post.featured_image%>" alt="<%= post.title%>" />
         </a>
-        <a href="blog-detail.html" class="blog-contains">
+        <a href="/post/<% post._id>" class="blog-contains">
           <% 
 // Create a new Date object from the published_date
 const publishedDate = new Date(post.published_date); 
