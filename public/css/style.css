@@ -1409,3 +1409,37 @@ footer li {
 .modal-footer {
   padding: 1.5rem; /* More padding for better spacing */
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #6d02ab;
+  border: 1px solid #6d02ab;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 0;
+  padding-left: 20px;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  background-color: #6d02ab;
+  border: none;
+  border-right: 1px solid #6d02ab;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

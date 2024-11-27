@@ -1,90 +1,109 @@
-    <!-- slider Section -->
-    <div class="slider-wrapper">
-      <div class="slider-content">
-        <div class="container">
-          <div class="row">
-            <div class="right-content col-lg-6 col-md-12" data-aos="fade-right">
-              <h1 class="slider-title">
-                Enhancing Learning with
-                <span class="underline"> IG Academy.</span>
-              </h1>
-              <p class="tagline">Your future, our responsibility</p>
-            </div>
+<!-- slider Section -->
+<div class="slider-wrapper">
+  <div class="slider-content">
+    <div class="container">
+      <div class="row">
+        <div class="right-content col-lg-6 col-md-12" data-aos="fade-right">
+          <h1 class="slider-title">
+            Enhancing Learning with
+            <span class="underline"> IG Academy.</span>
+          </h1>
+          <p class="tagline">Your future, our responsibility</p>
+        </div>
 
-            <div class="left-content col-lg-6 col-md-12" data-aos="fade-left">
-              <div class="form-box">
-                <form action="#" class="appointment w-100">
-                  <div class="col-12 py-2">
-                    <div class="form-group">
-                      <label for="">Location</label>
-                      <input
-                        type="text"
-                        name="location"
-                        class="form-control"
-                        id="location"
-                        placeholder="Enter Location"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 py-2">
-                    <div class="form-group">
-                      <label for="">Level</label>
-                      <input
-                        type="text"
-                        name="level"
-                        class="form-control"
-                        id="level"
-                        placeholder="Enter level (School, +2, Batchlor, Master)"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 py-2">
-                    <div class="form-group">
-                      <label for="Subject">Select Subject</label>
-                      <input
-                        type="text"
-                        name="subject"
-                        class="form-control"
-                        id="subject"
-                        placeholder="Enter Subject"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="col-12 py-2">
-                    <div
-                      class="btn-group form-group d-flex justify-content-center gap-5"
-                    >
-                      <input
-                        type="button"
-                        id="Tutor"
-                        value="Search Tutor"
-                        class="btn"
-                      />
-
-                      <input
-                        type="button"
-                        id="Student"
-                        value="Search Student"
-                        class="btn"
-                      />
-                    </div>
-                  </div>
-                </form>
+        <div class="left-content col-lg-6 col-md-12" data-aos="fade-left">
+          <div class="form-box">
+            <form action="#" class="appointment w-100">
+              <div class="col-12 py-2">
+                <div class="form-group">
+                  <label for="">Location</label>
+                  <input
+                    type="text"
+                    name="location"
+                    class="form-control"
+                    id="location"
+                    placeholder="Enter Location"
+                  />
+                </div>
               </div>
-            </div>
+              <div class="col-12 py-2">
+                <div class="form-group">
+                  <label for="level">Level</label>
+                  <% const levelCategory = categories.find(cat => cat.slug ===
+                  "level"); const levelChildCategories = categories.filter(
+                  category => category.parent && category.parent._id.toString()
+                  === levelCategory._id.toString() ); %>
+                  <select
+                    name="level"
+                    class="form-control select2"
+                    id="level"
+                    style="width: 100%"
+                  >
+                    <option value="">Select Level</option>
+                    <% levelChildCategories.forEach(childCat => { %>
+                    <option value="<%= childCat.slug %>">
+                      <%= childCat.title %>
+                    </option>
+                    <% }); %>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 py-2">
+                <div class="form-group">
+                  <label for="Subject">Select Subject</label>
+                  <% const subjectCategory = categories.find(cat => cat.slug ===
+                  "subject"); const subjectChildCategories = categories.filter(
+                  category => category.parent && category.parent._id.toString()
+                  === subjectCategory._id.toString() ); %>
+                  <select
+                    name="subject[]"
+                    class="form-control select2"
+                    id="subject"
+                    multiple="multiple"
+                    style="width: 100%"
+                  >
+                  <% subjectChildCategories.forEach(childCat => { %>
+                    <option value="<%= childCat.slug %>">
+                      <%= childCat.title %>
+                    </option>
+                    <% }); %>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 py-2">
+                <div
+                  class="btn-group form-group d-flex justify-content-center gap-5"
+                >
+                  <input
+                    type="button"
+                    id="Tutor"
+                    value="Search Tutor"
+                    class="btn"
+                  />
+
+                  <input
+                    type="button"
+                    id="Student"
+                    value="Search Student"
+                    class="btn"
+                  />
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-
-      <div class="owl-carousel owl-theme slider-section">
-        <% sliders.forEach(function(slider) { %>
-
-        <div class="item">
-          <img src="<%= slider.featured_image %>" alt="<%= slider.title %>" />
-        </div>
-        <% }) %>
-      
-      </div>
-      <div class="overlay"></div>
     </div>
+  </div>
+
+  <div class="owl-carousel owl-theme slider-section">
+    <% sliders.forEach(function(slider) { %>
+
+    <div class="item">
+      <img src="<%= slider.featured_image %>" alt="<%= slider.title %>" />
+    </div>
+    <% }) %>
+  </div>
+  <div class="overlay"></div>
+</div>

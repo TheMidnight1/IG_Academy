@@ -1,8 +1,42 @@
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/theme/IG_Academy/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/theme/IG_Academy/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="/theme/IG_Academy/js/app.js"></script>
+
+<script>
+    $(document).ready(function () {
+      $('.select2').select2({
+        placeholder: "Select Level",
+        allowClear: true,
+      });
+
+      $('#subject').select2({
+      placeholder: "Select Subjects",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+    });
+
+    
+  </script>
 
 </body>
 </html>
