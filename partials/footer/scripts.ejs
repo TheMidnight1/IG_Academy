@@ -33,7 +33,138 @@
         return markup; // Allows rendering HTML in templates
       },
     }); 
+
+
+    $('#subject-student').select2({
+      placeholder: "Select Subjects",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#level-student').select2({
+      placeholder: "Select Level",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    
+    $('#subject-teacher').select2({
+      placeholder: "Select Subjects",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#level-teacher').select2({
+      placeholder: "Select Level",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#subject-teacher').select2({
+      placeholder: "Select Subjects",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#tutionType').select2({
+      placeholder: "Select Type",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
     });
+
+    
 
     
   </script>

@@ -39,9 +39,7 @@
           categories.filter(category => !category.parent); %> <%
           parentCategories.forEach(cat => { %> <% if (catCount < 3) { %>
           <li class="<%= showingpage === cat.slug ? 'selected' : '' %>">
-            <a href="/category/<%= cat.slug %>">
-              <%= cat.title %>
-            </a>
+            <a href="/category/<%= cat.slug %>"> <%= cat.title %> </a>
             <% catCount++; %> <% } %> <% }); %>
           </li>
 
@@ -56,13 +54,10 @@
         <div class="footer-title">quick-links</div>
         <div class="line"></div>
         <ul>
-          <% let staticPageCount = 0; %>
-          <% pages.forEach(page => { %> 
-            <% if (staticPageCount < 5) { %>
-              <li><a href="/page/<%= page.slug %>"><%= page.title %></a></li>
-              <% staticPageCount++; %>
-            <% } %>
-          <% }) %>
+          <% let staticPageCount = 0; %> <% pages.forEach(page => { %> <% if
+          (staticPageCount < 5) { %>
+          <li><a href="/page/<%= page.slug %>"><%= page.title %></a></li>
+          <% staticPageCount++; %> <% } %> <% }) %>
         </ul>
       </div>
 
@@ -97,253 +92,519 @@
   </div>
 </footer>
 
- <!-- Student Form Modal -->
- <div
- class="modal fade"
- id="studentModal"
- tabindex="-1"
- aria-labelledby="studentModalLabel"
- aria-hidden="true"
+<!-- Student Form Modal -->
+<div
+  class="modal fade"
+  id="studentModal"
+  tabindex="-1"
+  aria-labelledby="studentModalLabel"
+  aria-hidden="true"
 >
- <div class="modal-dialog modal-lg modal-dialog-centered">
-   <div class="modal-content">
-     <div class="modal-header">
-       <h5 class="modal-title" id="studentModalLabel">Call for Tutor</h5>
-       <button
-         type="button"
-         class="btn-close"
-         data-bs-dismiss="modal"
-         aria-label="Close"
-       ></button>
-     </div>
-     <div class="modal-body">
-       <form id="studentForm">
-         <div class="mb-3">
-           <label for="studentName" class="form-label">Name</label>
-           <input
-             type="text"
-             class="form-control"
-             id="studentName"
-             name="studentName"
-             required
-           />
-         </div>
-         <div class="mb-3">
-           <label for="studentLevel" class="form-label">Level</label>
-           <input
-             type="text"
-             class="form-control"
-             id="studentLevel"
-             name="studentLevel"
-             required
-           />
-         </div>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="studentModalLabel">Call for Tutor</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="studentForm">
+          <!-- Name Input -->
+          <div class="mb-3">
+            <label for="studentName" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="studentName"
+              name="studentName"
+              required
+            />
+          </div>
 
-         <div class="mb-3">
-           <label for="studentSubject" class="form-label"
-             >Subject for Tutor</label
-           >
-           <input
-             type="text"
-             class="form-control"
-             id="studentSubject"
-             name="studentSubject"
-             required
-           />
-         </div>
+          <!-- Level Dropdown -->
+          <div class="mb-3">
+            <label for="studentLevel" class="form-label">Level</label>
+            <% const levelCategory = categories.find(cat => cat.slug ===
+            "level"); const levelChildCategories = categories.filter(category =>
+            category.parent && category.parent._id.toString() ===
+            levelCategory._id.toString() ); %>
+            <select
+              name="level"
+              class="form-control select2"
+              id="level-student"
+              style="width: 100%"
+              required
+            >
+              <option value="">Select Level</option>
+              <% levelChildCategories.forEach(childCat => { %>
+              <option value="<%= childCat.slug %>">
+                <%= childCat.title %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
 
-         <div class="row">
-           <div class="col-md-6 mb-3">
-             <label for="studentDistrict" class="form-label"
-               >District</label
-             >
-             <input
-               type="text"
-               class="form-control"
-               id="studentDistrict"
-               name="studentDistrict"
-               required
-             />
-           </div>
-           <div class="col-md-6 mb-3">
-             <label for="studentLocation" class="form-label"
-               >Location</label
-             >
-             <input
-               type="text"
-               class="form-control"
-               id="studentLocation"
-               name="studentLocation"
-               required
-             />
-           </div>
-         </div>
+          <!-- Subject Dropdown -->
+          <div class="mb-3">
+            <label for="studentSubject" class="form-label"
+              >Subject for Tutor</label
+            >
+            <% const subjectCategory = categories.find(cat => cat.slug ===
+            "subject"); const subjectChildCategories =
+            categories.filter(category => category.parent &&
+            category.parent._id.toString() === subjectCategory._id.toString() );
+            %>
+            <select
+              name="subjectStudent[]"
+              class="form-control select2"
+              id="subject-student"
+              multiple="multiple"
+              style="width: 100%"
+              required
+            >
+              <% subjectChildCategories.forEach(childCat => { %>
+              <option value="<%= childCat.slug %>">
+                <%= childCat.title %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
 
-         <div class="row">
-           <div class="col-md-6 mb-3">
-             <label for="studentPhone" class="form-label"
-               >Phone Number</label
-             >
-             <input
-               type="tel"
-               class="form-control"
-               id="studentPhone"
-               name="studentPhone"
-               required
-             />
-           </div>
-           <div class="col-md-6 mb-3">
-             <label for="studentEmail" class="form-label">Email</label>
-             <input
-               type="email"
-               class="form-control"
-               id="studentEmail"
-               name="studentEmail"
-               required
-             />
-           </div>
-         </div>
-         <div class="mb-3">
-           <label for="studentMessage" class="form-label">Message</label>
-           <textarea
-             class="form-control"
-             id="studentMessage"
-             name="studentMessage"
-             rows="3"
-           ></textarea>
-         </div>
-         <button type="submit" class="btn btn-primary">Submit</button>
-       </form>
-     </div>
-   </div>
- </div>
+          <!-- Tution Type and Location -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="tutionType" class="form-label">Tution Type</label>
+              <select
+                name="tutionType"
+                class="form-control select2"
+                id="tutionType"
+                style="width: 100%"
+                required
+              >
+                <option value="">Select Type</option>
+                <option value="any">Any</option>
+                <option value="homeTution">Home Tution</option>
+                <option value="physicalTution">Physical Tution</option>
+                <option value="onlineTution">Online Tution</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="studentLocation" class="form-label">Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="studentLocation"
+                name="studentLocation"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Phone and Email -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="studentPhone" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="studentPhone"
+                name="studentPhone"
+                required
+              />
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="studentEmail" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="studentEmail"
+                name="studentEmail"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tutoring Days</label>
+            <div class="row">
+              <div class="box-1 col-6">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-sunday"
+                    value="sunday"
+                  />
+                  <label class="form-check-label" for="day-sunday"
+                    >Sunday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-monday"
+                    value="monday"
+                  />
+                  <label class="form-check-label" for="day-monday"
+                    >Monday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-tuesday"
+                    value="tuesday"
+                  />
+                  <label class="form-check-label" for="day-tuesday"
+                    >Tuesday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-wednesday"
+                    value="wednesday"
+                  />
+                  <label class="form-check-label" for="day-wednesday"
+                    >Wednesday</label
+                  >
+                </div>
+              </div>
+              <div class="box-1 col-6">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-thursday"
+                    value="thursday"
+                  />
+                  <label class="form-check-label" for="day-thursday"
+                    >Thursday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-friday"
+                    value="friday"
+                  />
+                  <label class="form-check-label" for="day-friday"
+                    >Friday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-saturday"
+                    value="saturday"
+                  />
+                  <label class="form-check-label" for="day-saturday"
+                    >Saturday</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="mb-3">
+            <label for="studentMessage" class="form-label">Message</label>
+            <textarea
+              class="form-control"
+              id="studentMessage"
+              name="studentMessage"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- student form -->
 
-
-
 <!-- teacher form -->
-    <!-- Teacher Form Modal -->
-    <div
-      class="modal fade"
-      id="teacherModal"
-      tabindex="-1"
-      aria-labelledby="teacherModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="teacherModalLabel">Apply for Tutor</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+<!-- Teacher Form Modal -->
+<div
+  class="modal fade"
+  id="teacherModal"
+  tabindex="-1"
+  aria-labelledby="teacherModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="teacherModalLabel">Apply for Tutor</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="teacherForm">
+          <!-- Teacher Name -->
+          <div class="mb-3">
+            <label for="teacherName" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="teacherName"
+              name="teacherName"
+              required
+            />
           </div>
-          <div class="modal-body">
-            <form id="teacherForm">
-              <div class="mb-3">
-                <label for="teacherName" class="form-label">Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="teacherName"
-                  name="teacherName"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="teacherLevel" class="form-label">Level</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="teacherLevel"
-                  name="teacherLevel"
-                  required
-                />
-              </div>
 
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="teacherDistrict" class="form-label"
-                    >District</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="teacherDistrict"
-                    name="teacherDistrict"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="teacherLocation" class="form-label"
-                    >Location</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="teacherLocation"
-                    name="teacherLocation"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="teacherPhone" class="form-label"
-                    >Phone Number</label
-                  >
-                  <input
-                    type="tel"
-                    class="form-control"
-                    id="teacherPhone"
-                    name="teacherPhone"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="teacherEmail" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="teacherEmail"
-                    name="teacherEmail"
-                    required
-                  />
-                </div>
-              </div>
+          <!-- Level Dropdown -->
+          <div class="mb-3">
+            <label for="teacherLevel" class="form-label">Level</label>
 
-              <div class="mb-3">
-                <label for="teacherCV" class="form-label">Upload CV</label>
-                <input
-                  type="file"
-                  class="form-control"
-                  id="teacherCV"
-                  name="teacherCV"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="qualificationCert" class="form-label"
-                  >Qualification Certificate</label
-                >
-                <input
-                  type="file"
-                  class="form-control"
-                  id="qualificationCert"
-                  name="qualificationCert"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <select
+              name="level"
+              class="form-control select2"
+              id="level-teacher"
+              style="width: 100%"
+              required
+            >
+              <option value="">Select Level</option>
+              <% levelChildCategories.forEach(childCat => { %>
+              <option value="<%= childCat.slug %>">
+                <%= childCat.title %>
+              </option>
+              <% }); %>
+            </select>
           </div>
-        </div>
+
+          <!-- Subject Dropdown -->
+          <div class="mb-3">
+            <label for="subject-teacher" class="form-label">Subjects</label>
+
+            <select
+              name="subjectTeacher[]"
+              class="form-control select2"
+              id="subject-teacher"
+              multiple="multiple"
+              style="width: 100%"
+              required
+            >
+              <% subjectChildCategories.forEach(childCat => { %>
+              <option value="<%= childCat.slug %>">
+                <%= childCat.title %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+
+          <!-- District and Location -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="teacherDistrict" class="form-label">District</label>
+              <input
+                type="text"
+                class="form-control"
+                id="teacherDistrict"
+                name="teacherDistrict"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="teacherLocation" class="form-label">Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="teacherLocation"
+                name="teacherLocation"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Phone and Email -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="teacherPhone" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="teacherPhone"
+                name="teacherPhone"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="teacherEmail" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="teacherEmail"
+                name="teacherEmail"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Upload CV -->
+          <div class="mb-3">
+            <label for="teacherCV" class="form-label">Upload CV</label>
+            <input
+              type="file"
+              class="form-control"
+              id="teacherCV"
+              name="teacherCV"
+              accept=".pdf,.doc,.docx"
+              required
+            />
+          </div>
+
+          <!-- Qualification Certificate -->
+          <div class="mb-3">
+            <label for="qualificationCert" class="form-label"
+              >Qualification Certificate</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="qualificationCert"
+              name="qualificationCert"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tutoring Days</label>
+            <div class="row">
+              <div class="box-1 col-6">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-sunday"
+                    value="sunday"
+                  />
+                  <label class="form-check-label" for="day-sunday"
+                    >Sunday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-monday"
+                    value="monday"
+                  />
+                  <label class="form-check-label" for="day-monday"
+                    >Monday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-tuesday"
+                    value="tuesday"
+                  />
+                  <label class="form-check-label" for="day-tuesday"
+                    >Tuesday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-wednesday"
+                    value="wednesday"
+                  />
+                  <label class="form-check-label" for="day-wednesday"
+                    >Wednesday</label
+                  >
+                </div>
+              </div>
+              <div class="box-1 col-6">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-thursday"
+                    value="thursday"
+                  />
+                  <label class="form-check-label" for="day-thursday"
+                    >Thursday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-friday"
+                    value="friday"
+                  />
+                  <label class="form-check-label" for="day-friday"
+                    >Friday</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tutoringDays[]"
+                    id="day-saturday"
+                    value="saturday"
+                  />
+                  <label class="form-check-label" for="day-saturday"
+                    >Saturday</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="mb-3">
+            <label for="studentMessage" class="form-label">Message</label>
+            <textarea
+              class="form-control"
+              id="studentMessage"
+              name="studentMessage"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
-    <!-- teacher form -->
+  </div>
+</div>
+<!-- teacher form -->
 
 <%- include('./scripts') %>
