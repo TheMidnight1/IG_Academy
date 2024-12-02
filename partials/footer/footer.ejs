@@ -236,97 +236,134 @@
             </select>
           </div>
 
-          <!-- Subject Dropdown -->
+<!-- Custom Fields -->
+<div >
+  <% if (Array.isArray(customField) && customField.length > 0) { %>
+    <% customField.forEach(field => { %>
+      <% field.target_type.forEach((_, index) => { %>
+        <% const fieldName = field.field_name[index]; %>
+        <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
+  
+        <% if (fieldName === 'Tutoring Days') { %>
+          <!-- Tutoring Days -->
           <div class="mb-3">
-            <label for="subject-teacher" class="form-label">Subjects</label>
-
-            <select name="subjectTeacher[]" class="form-control select2" id="subject-teacher" multiple="multiple" style="width: 100%" required>
-              <% subjectChildCategories.forEach(childCat => { %>
-              <option value="<%= childCat.slug %>">
-                <%= childCat.title %>
-              </option>
-              <% }); %>
-            </select>
+            <label class="form-label">Tutoring Days</label>
+            <div class="row">
+              <div class="box-1 col-6">
+                <% ['sunday', 'monday', 'tuesday', 'wednesday'].forEach(day => { %>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="tutoringDays[]"
+                      id="day-<%= day %>"
+                      value="<%= day %>"
+                      <%= Array.isArray(fieldValue) && fieldValue.includes(day) ? 'checked' : '' %>
+                    />
+                    <label class="form-check-label" for="day-<%= day %>">
+                      <%= day.charAt(0).toUpperCase() + day.slice(1) %>
+                    </label>
+                  </div>
+                <% }); %>
+              </div>
+              <div class="box-1 col-6">
+                <% ['thursday', 'friday', 'saturday'].forEach(day => { %>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="tutoringDays[]"
+                      id="day-<%= day %>"
+                      value="<%= day %>"
+                      <%= Array.isArray(fieldValue) && fieldValue.includes(day) ? 'checked' : '' %>
+                    />
+                    <label class="form-check-label" for="day-<%= day %>">
+                      <%= day.charAt(0).toUpperCase() + day.slice(1) %>
+                    </label>
+                  </div>
+                <% }); %>
+              </div>
+            </div>
           </div>
-
-          <!-- District and Location -->
+        <% } else if (fieldName === 'District') { %>
+          <!-- District -->
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="teacherDistrict" class="form-label">District</label>
-              <input type="text" class="form-control" id="teacherDistrict" name="teacherDistrict" required />
+              <input
+                type="text"
+                class="form-control"
+                id="teacherDistrict"
+                name="teacherDistrict"
+                value="<%= fieldValue %>"
+                required
+              />
             </div>
+        <% } else if (fieldName === 'Location') { %>
+            <!-- Location -->
             <div class="col-md-6 mb-3">
               <label for="teacherLocation" class="form-label">Location</label>
-              <input type="text" class="form-control" id="teacherLocation" name="teacherLocation" required />
+              <input
+                type="text"
+                class="form-control"
+                id="teacherLocation"
+                name="teacherLocation"
+                value="<%= fieldValue %>"
+                required
+              />
             </div>
           </div>
-
-          <!-- Phone and Email -->
+        <% } else if (fieldName === 'Phone') { %>
+          <!-- Phone -->
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="teacherPhone" class="form-label">Phone Number</label>
-              <input type="tel" class="form-control" id="teacherPhone" name="teacherPhone" required />
+              <input
+                type="tel"
+                class="form-control"
+                id="teacherPhone"
+                name="teacherPhone"
+                value="<%= fieldValue %>"
+                required
+              />
             </div>
+        <% } else if (fieldName === 'Email') { %>
+            <!-- Email -->
             <div class="col-md-6 mb-3">
               <label for="teacherEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" required />
+              <input
+                type="email"
+                class="form-control"
+                id="teacherEmail"
+                name="teacherEmail"
+                value="<%= fieldValue %>"
+                required
+              />
             </div>
           </div>
+        <% } %>
+      <% }); %>
+    <% }); %>
+  <% } %>
+  
+</div>
 
           <!-- Upload CV -->
           <div class="mb-3">
             <label for="teacherCV" class="form-label">Upload CV</label>
-            <input type="file" class="form-control" id="teacherCV" name="teacherCV" accept=".pdf,.doc,.docx" required />
+            <input type="file" class="form-control" id="teacherCV" name="teacherCV" accept=".pdf,.doc,.docx"  />
           </div>
 
           <!-- Qualification Certificate -->
           <div class="mb-3">
             <label for="qualificationCert" class="form-label">Qualification Certificate</label>
-            <input type="file" class="form-control" id="qualificationCert" name="qualificationCert" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required />
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Tutoring Days</label>
-            <div class="row">
-              <div class="box-1 col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-sunday" value="sunday" />
-                  <label class="form-check-label" for="day-sunday">Sunday</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-monday" value="monday" />
-                  <label class="form-check-label" for="day-monday">Monday</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-tuesday" value="tuesday" />
-                  <label class="form-check-label" for="day-tuesday">Tuesday</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-wednesday" value="wednesday" />
-                  <label class="form-check-label" for="day-wednesday">Wednesday</label>
-                </div>
-              </div>
-              <div class="box-1 col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-thursday" value="thursday" />
-                  <label class="form-check-label" for="day-thursday">Thursday</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-friday" value="friday" />
-                  <label class="form-check-label" for="day-friday">Friday</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-saturday" value="saturday" />
-                  <label class="form-check-label" for="day-saturday">Saturday</label>
-                </div>
-              </div>
-            </div>
+            <input type="file" class="form-control" id="qualificationCert" name="qualificationCert" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"  />
           </div>
 
           <!-- Message -->
           <div class="mb-3">
-            <label for="studentMessage" class="form-label">Message</label>
-            <textarea class="form-control" id="studentMessage" name="studentMessage" rows="3"></textarea>
+            <label for="teacherMessage" class="form-label">Message</label>
+            <textarea class="form-control" id="teacherMessage" name="teacherMessage" rows="3"></textarea>
           </div>
 
           <!-- Submit Button -->
@@ -340,6 +377,7 @@
 
 <%- include('./scripts') %>
 
+<!-- For Student -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const studentForm = document.getElementById('studentForm');
@@ -388,6 +426,55 @@
       } catch (error) {
         console.error('Error submitting form:', error);
         alert('An error occurred. Please try again.');
+      }
+    });
+  });
+</script>
+
+<!-- For Teacher -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const teacherForm = document.getElementById("teacherForm");
+
+    teacherForm.addEventListener("submit", async function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const formData = new FormData(teacherForm);
+      const formObject = {};
+
+      // Convert FormData to plain object
+      formData.forEach((value, key) => {
+        if (key.endsWith("[]")) {
+          const baseKey = key.slice(0, -2);
+          if (!formObject[baseKey]) {
+            formObject[baseKey] = [];
+          }
+          formObject[baseKey].push(value);
+        } else {
+          formObject[key] = value;
+        }
+      });
+
+      try {
+        const response = await fetch("/submit-teacher-form", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Form submission failed");
+        }
+
+        const result = await response.json();
+        alert("Form submitted successfully!");
+        teacherForm.reset(); // Optional: Reset the form
+      } catch (error) {
+        console.error("Error submitting form:", error.message);
+        alert(`An error occurred: ${error.message}`);
       }
     });
   });
