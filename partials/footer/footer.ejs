@@ -2,35 +2,21 @@
 <footer>
   <div class="container">
     <div class="row">
-      <div
-        class="company-detail postion-relative col-lg-3 col-md-6"
-        data-aos="fade-up"
-      >
+      <div class="company-detail postion-relative col-lg-3 col-md-6" data-aos="fade-up">
         <div class="footer-title">IG Acedemy</div>
         <div class="line"></div>
         <% pages.forEach(page => { %> <% if (page.slug === 'about-us') { %>
         <p class="gray-text-dark"><%- truncateWords(page.content, 40) %></p>
         <% } %> <% }) %>
         <div class="social-media d-flex gap-3 align-items-center">
-          <a href="#"
-            ><i class="social-icon fa-brands fa-facebook footer-icon"></i
-          ></a>
-          <a href="#"
-            ><i class="social-icon fa-brands fa-instagram footer-icon"></i
-          ></a>
-          <a href="#"
-            ><i class="social-icon fa-brands fa-twitter footer-icon"></i
-          ></a>
-          <a href="#"
-            ><i class="social-icon fa-brands fa-linkedin footer-icon"></i
-          ></a>
+          <a href="#"><i class="social-icon fa-brands fa-facebook footer-icon"></i></a>
+          <a href="#"><i class="social-icon fa-brands fa-instagram footer-icon"></i></a>
+          <a href="#"><i class="social-icon fa-brands fa-twitter footer-icon"></i></a>
+          <a href="#"><i class="social-icon fa-brands fa-linkedin footer-icon"></i></a>
         </div>
       </div>
 
-      <div
-        class="quick-links postion-relative col-12 col-lg-3 col-md-6"
-        data-aos="fade-up"
-      >
+      <div class="quick-links postion-relative col-12 col-lg-3 col-md-6" data-aos="fade-up">
         <div class="footer-title">Menu</div>
         <div class="line"></div>
         <ul>
@@ -47,10 +33,7 @@
         </ul>
       </div>
 
-      <div
-        class="quick-links postion-relative col-lg-3 col-md-6"
-        data-aos="fade-up"
-      >
+      <div class="quick-links postion-relative col-lg-3 col-md-6" data-aos="fade-up">
         <div class="footer-title">quick-links</div>
         <div class="line"></div>
         <ul>
@@ -61,17 +44,11 @@
         </ul>
       </div>
 
-      <div
-        class="contacts postion-relative col-12 col-lg-3 col-md-6"
-        data-aos="fade-up"
-      >
+      <div class="contacts postion-relative col-12 col-lg-3 col-md-6" data-aos="fade-up">
         <div class="footer-title">Have a question</div>
         <div class="line"></div>
         <div class="row pb-3 align-items-center">
-          <i class="col-2 footer-icon-contact fa-solid fa-location-dot"></i
-          ><span class="col-10 footer-contact address"
-            >203 Fake St. Mountain View, San Francisco, California, USA</span
-          >
+          <i class="col-2 footer-icon-contact fa-solid fa-location-dot"></i><span class="col-10 footer-contact address">203 Fake St. Mountain View, San Francisco, California, USA</span>
         </div>
         <div class="row pb-3 align-items-center">
           <i class="col-2 footer-icon-contact fa-solid fa-phone"></i>
@@ -86,43 +63,24 @@
   </div>
 
   <div class="copyright-section" data-aos="fade-up">
-    <span class="copy"
-      >Copyright © 2024 Goodwill Cleaning | All rights reserved</span
-    >&nbsp; Site by: <a href="#">CyBurning</a>
+    <span class="copy">Copyright © 2024 Goodwill Cleaning | All rights reserved</span>&nbsp; Site by: <a href="#">CyBurning</a>
   </div>
 </footer>
 
 <!-- Student Form Modal -->
-<div
-  class="modal fade"
-  id="studentModal"
-  tabindex="-1"
-  aria-labelledby="studentModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="studentModalLabel">Call for Tutor</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="studentForm">
+        <form id="studentForm" action="/submit-tutor-form" method="post">
           <!-- Name Input -->
           <div class="mb-3">
             <label for="studentName" class="form-label">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="studentName"
-              name="studentName"
-              required
-            />
+            <input type="text" class="form-control" id="studentName" name="studentName" required />
           </div>
 
           <!-- Level Dropdown -->
@@ -132,13 +90,7 @@
             "level"); const levelChildCategories = categories.filter(category =>
             category.parent && category.parent._id.toString() ===
             levelCategory._id.toString() ); %>
-            <select
-              name="level"
-              class="form-control select2"
-              id="level-student"
-              style="width: 100%"
-              required
-            >
+            <select name="level" class="form-control select2" id="level-student" style="width: 100%" required>
               <option value="">Select Level</option>
               <% levelChildCategories.forEach(childCat => { %>
               <option value="<%= childCat.slug %>">
@@ -150,22 +102,13 @@
 
           <!-- Subject Dropdown -->
           <div class="mb-3">
-            <label for="studentSubject" class="form-label"
-              >Subject for Tutor</label
-            >
+            <label for="studentSubject" class="form-label">Subject for Tutor</label>
             <% const subjectCategory = categories.find(cat => cat.slug ===
             "subject"); const subjectChildCategories =
             categories.filter(category => category.parent &&
             category.parent._id.toString() === subjectCategory._id.toString() );
             %>
-            <select
-              name="subjectStudent[]"
-              class="form-control select2"
-              id="subject-student"
-              multiple="multiple"
-              style="width: 100%"
-              required
-            >
+            <select name="subjectStudent[]" class="form-control select2" id="subject-student" multiple="multiple" style="width: 100%" required>
               <% subjectChildCategories.forEach(childCat => { %>
               <option value="<%= childCat.slug %>">
                 <%= childCat.title %>
@@ -174,168 +117,87 @@
             </select>
           </div>
 
-          <!-- Tution Type and Location -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="tutionType" class="form-label">Tution Type</label>
-              <select
-                name="tutionType"
-                class="form-control select2"
-                id="tutionType"
-                style="width: 100%"
-                required
-              >
-                <option value="">Select Type</option>
-                <option value="any">Any</option>
-                <option value="homeTution">Home Tution</option>
-                <option value="physicalTution">Physical Tution</option>
-                <option value="onlineTution">Online Tution</option>
-              </select>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="studentLocation" class="form-label">Location</label>
-              <input
-                type="text"
-                class="form-control"
-                id="studentLocation"
-                name="studentLocation"
-                required
-              />
-            </div>
-          </div>
 
-          <!-- Phone and Email -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="studentPhone" class="form-label">Phone Number</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="studentPhone"
-                name="studentPhone"
-                required
-              />
-            </div>
 
-            <div class="col-md-6 mb-3">
-              <label for="studentEmail" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="studentEmail"
-                name="studentEmail"
-                required
-              />
-            </div>
-          </div>
 
-          <div class="mb-3">
-            <label class="form-label">Tutoring Days</label>
-            <div class="row">
-              <div class="box-1 col-6">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-sunday"
-                    value="sunday"
-                  />
-                  <label class="form-check-label" for="day-sunday"
-                    >Sunday</label
-                  >
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-monday"
-                    value="monday"
-                  />
-                  <label class="form-check-label" for="day-monday"
-                    >Monday</label
-                  >
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-tuesday"
-                    value="tuesday"
-                  />
-                  <label class="form-check-label" for="day-tuesday"
-                    >Tuesday</label
-                  >
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-wednesday"
-                    value="wednesday"
-                  />
-                  <label class="form-check-label" for="day-wednesday"
-                    >Wednesday</label
-                  >
+            <div>
+              <% if (Array.isArray(customField) && customField.length > 0) { %>
+              <% customField.forEach(field => { %>
+              <% field.target_type.forEach((fields, index) => { %>
+              <% const fieldName = field.field_name[index]; %>
+              <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
+
+              <% if (fieldName === 'Tutoring Days') { %>
+              <div class="mb-3">
+                <label class="form-label">Tutoring Days</label>
+                <div class="row">
+                  <div class="box-1 col-6">
+                    <% ['sunday', 'monday', 'tuesday', 'wednesday'].forEach(day => { %>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <% if (fieldValue.includes(day)) { %> checked <% } %> />
+                      <label class="form-check-label" for="day-<%= day %>">
+                        <%= day.charAt(0).toUpperCase() + day.slice(1) %>
+                      </label>
+                    </div>
+                    <% }); %>
+                  </div>
+                  <div class="box-1 col-6">
+                    <% ['thursday', 'friday', 'saturday'].forEach(day => { %>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <% if (fieldValue.includes(day)) { %> checked <% } %> />
+                      <label class="form-check-label" for="day-<%= day %>">
+                        <%= day.charAt(0).toUpperCase() + day.slice(1) %>
+                      </label>
+                    </div>
+                    <% }); %>
+                  </div>
                 </div>
               </div>
-              <div class="box-1 col-6">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-thursday"
-                    value="thursday"
-                  />
-                  <label class="form-check-label" for="day-thursday"
-                    >Thursday</label
-                  >
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-friday"
-                    value="friday"
-                  />
-                  <label class="form-check-label" for="day-friday"
-                    >Friday</label
-                  >
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-saturday"
-                    value="saturday"
-                  />
-                  <label class="form-check-label" for="day-saturday"
-                    >Saturday</label
-                  >
-                </div>
+              
+              <% } else if (fieldName === 'Phone') { %>
+              <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" class="form-control" name="phone" value="<%= fieldValue %>" placeholder="Enter phone number" />
               </div>
+              <% } else if (fieldName === 'Email') { %>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" value="<%= fieldValue %>" placeholder="Enter email address" />
+              </div>
+              <% } else if (fieldName === 'Location') { %>
+              <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" name="location" value="<%= fieldValue %>" placeholder="Enter location" />
+              </div>
+              <% } else if (fieldName === 'Tuition Type') { %>
+                <div class="mb-3">
+                  <label for="tutionType" class="form-label">Tuition Type</label>
+                  <select name="tutionType" class="form-control" id="tutionType" required>
+                    <option value="" <% if (!fieldValue) { %>selected<% } %>>Select Type</option>
+                    <option value="any" <% if (fieldValue === 'any') { %>selected<% } %>>Any</option>
+                    <option value="homeTution" <% if (fieldValue === 'homeTution') { %>selected<% } %>>Home Tuition</option>
+                    <option value="physicalTution" <% if (fieldValue === 'physicalTution') { %>selected<% } %>>Physical Tuition</option>
+                    <option value="onlineTution" <% if (fieldValue === 'onlineTution') { %>selected<% } %>>Online Tuition</option>
+                  </select>
+                </div>
+              <% } %>
+              <% }) %>
+              <% }) %>
+              <% } %>
+              
             </div>
-          </div>
 
-          <!-- Message -->
-          <div class="mb-3">
-            <label for="studentMessage" class="form-label">Message</label>
-            <textarea
-              class="form-control"
-              id="studentMessage"
-              name="studentMessage"
-              rows="3"
-            ></textarea>
-          </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary">Submit</button>
+            <!-- Message -->
+            <div class="mb-3">
+              <label for="studentMessage" class="form-label">Message</label>
+              <textarea class="form-control" id="studentMessage" name="studentMessage" rows="3"></textarea>
+            </div>
+
+
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
@@ -345,49 +207,26 @@
 
 <!-- teacher form -->
 <!-- Teacher Form Modal -->
-<div
-  class="modal fade"
-  id="teacherModal"
-  tabindex="-1"
-  aria-labelledby="teacherModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="teacherModal" tabindex="-1" aria-labelledby="teacherModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="teacherModalLabel">Apply for Tutor</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="teacherForm">
           <!-- Teacher Name -->
           <div class="mb-3">
             <label for="teacherName" class="form-label">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="teacherName"
-              name="teacherName"
-              required
-            />
+            <input type="text" class="form-control" id="teacherName" name="teacherName" required />
           </div>
 
           <!-- Level Dropdown -->
           <div class="mb-3">
             <label for="teacherLevel" class="form-label">Level</label>
 
-            <select
-              name="level"
-              class="form-control select2"
-              id="level-teacher"
-              style="width: 100%"
-              required
-            >
+            <select name="level" class="form-control select2" id="level-teacher" style="width: 100%" required>
               <option value="">Select Level</option>
               <% levelChildCategories.forEach(childCat => { %>
               <option value="<%= childCat.slug %>">
@@ -401,14 +240,7 @@
           <div class="mb-3">
             <label for="subject-teacher" class="form-label">Subjects</label>
 
-            <select
-              name="subjectTeacher[]"
-              class="form-control select2"
-              id="subject-teacher"
-              multiple="multiple"
-              style="width: 100%"
-              required
-            >
+            <select name="subjectTeacher[]" class="form-control select2" id="subject-teacher" multiple="multiple" style="width: 100%" required>
               <% subjectChildCategories.forEach(childCat => { %>
               <option value="<%= childCat.slug %>">
                 <%= childCat.title %>
@@ -421,23 +253,11 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="teacherDistrict" class="form-label">District</label>
-              <input
-                type="text"
-                class="form-control"
-                id="teacherDistrict"
-                name="teacherDistrict"
-                required
-              />
+              <input type="text" class="form-control" id="teacherDistrict" name="teacherDistrict" required />
             </div>
             <div class="col-md-6 mb-3">
               <label for="teacherLocation" class="form-label">Location</label>
-              <input
-                type="text"
-                class="form-control"
-                id="teacherLocation"
-                name="teacherLocation"
-                required
-              />
+              <input type="text" class="form-control" id="teacherLocation" name="teacherLocation" required />
             </div>
           </div>
 
@@ -445,52 +265,24 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="teacherPhone" class="form-label">Phone Number</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="teacherPhone"
-                name="teacherPhone"
-                required
-              />
+              <input type="tel" class="form-control" id="teacherPhone" name="teacherPhone" required />
             </div>
             <div class="col-md-6 mb-3">
               <label for="teacherEmail" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="teacherEmail"
-                name="teacherEmail"
-                required
-              />
+              <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" required />
             </div>
           </div>
 
           <!-- Upload CV -->
           <div class="mb-3">
             <label for="teacherCV" class="form-label">Upload CV</label>
-            <input
-              type="file"
-              class="form-control"
-              id="teacherCV"
-              name="teacherCV"
-              accept=".pdf,.doc,.docx"
-              required
-            />
+            <input type="file" class="form-control" id="teacherCV" name="teacherCV" accept=".pdf,.doc,.docx" required />
           </div>
 
           <!-- Qualification Certificate -->
           <div class="mb-3">
-            <label for="qualificationCert" class="form-label"
-              >Qualification Certificate</label
-            >
-            <input
-              type="file"
-              class="form-control"
-              id="qualificationCert"
-              name="qualificationCert"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              required
-            />
+            <label for="qualificationCert" class="form-label">Qualification Certificate</label>
+            <input type="file" class="form-control" id="qualificationCert" name="qualificationCert" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required />
           </div>
 
           <div class="mb-3">
@@ -498,90 +290,34 @@
             <div class="row">
               <div class="box-1 col-6">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-sunday"
-                    value="sunday"
-                  />
-                  <label class="form-check-label" for="day-sunday"
-                    >Sunday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-sunday" value="sunday" />
+                  <label class="form-check-label" for="day-sunday">Sunday</label>
                 </div>
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-monday"
-                    value="monday"
-                  />
-                  <label class="form-check-label" for="day-monday"
-                    >Monday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-monday" value="monday" />
+                  <label class="form-check-label" for="day-monday">Monday</label>
                 </div>
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-tuesday"
-                    value="tuesday"
-                  />
-                  <label class="form-check-label" for="day-tuesday"
-                    >Tuesday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-tuesday" value="tuesday" />
+                  <label class="form-check-label" for="day-tuesday">Tuesday</label>
                 </div>
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-wednesday"
-                    value="wednesday"
-                  />
-                  <label class="form-check-label" for="day-wednesday"
-                    >Wednesday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-wednesday" value="wednesday" />
+                  <label class="form-check-label" for="day-wednesday">Wednesday</label>
                 </div>
               </div>
               <div class="box-1 col-6">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-thursday"
-                    value="thursday"
-                  />
-                  <label class="form-check-label" for="day-thursday"
-                    >Thursday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-thursday" value="thursday" />
+                  <label class="form-check-label" for="day-thursday">Thursday</label>
                 </div>
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-friday"
-                    value="friday"
-                  />
-                  <label class="form-check-label" for="day-friday"
-                    >Friday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-friday" value="friday" />
+                  <label class="form-check-label" for="day-friday">Friday</label>
                 </div>
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="tutoringDays[]"
-                    id="day-saturday"
-                    value="saturday"
-                  />
-                  <label class="form-check-label" for="day-saturday"
-                    >Saturday</label
-                  >
+                  <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-saturday" value="saturday" />
+                  <label class="form-check-label" for="day-saturday">Saturday</label>
                 </div>
               </div>
             </div>
@@ -590,12 +326,7 @@
           <!-- Message -->
           <div class="mb-3">
             <label for="studentMessage" class="form-label">Message</label>
-            <textarea
-              class="form-control"
-              id="studentMessage"
-              name="studentMessage"
-              rows="3"
-            ></textarea>
+            <textarea class="form-control" id="studentMessage" name="studentMessage" rows="3"></textarea>
           </div>
 
           <!-- Submit Button -->
@@ -608,3 +339,56 @@
 <!-- teacher form -->
 
 <%- include('./scripts') %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const studentForm = document.getElementById('studentForm');
+
+    studentForm.addEventListener('submit', async function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Collect form data
+      const formData = new FormData(studentForm);
+      const formObject = {};
+
+
+      // Convert FormData to a plain object
+      formData.forEach((value, key) => {
+        // Handle multiple select and checkboxes
+        if (key.endsWith('[]')) {
+          const baseKey = key.slice(0, -2);
+          if (!formObject[baseKey]) {
+            formObject[baseKey] = [];
+          }
+          formObject[baseKey].push(value);
+        } else {
+          formObject[key] = value;
+        }
+      });
+
+      try {
+        const response = await fetch('/submit-tutor-form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formObject)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Form submitted successfully:', result);
+          alert('Form submitted successfully!');
+          studentForm.reset(); // Optional: reset form after successful submission
+        } else {
+          const errorData = await response.json();
+          console.error('Form submission failed:', errorData);
+          alert(`Form submission failed: ${errorData.error}`);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again.');
+      }
+    });
+  });
+</script>
