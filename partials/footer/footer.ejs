@@ -174,7 +174,7 @@
                   <label for="tutionType" class="form-label">Tuition Type</label>
                   <select name="tutionType" class="form-control" id="tutionType" required>
                     <option value="" <% if (!fieldValue) { %>selected<% } %>>Select Type</option>
-                    <option value="any" <% if (fieldValue === 'any') { %>selected<% } %>>Any</option>
+                    <!-- <option value="any" <% if (fieldValue === 'any') { %>selected<% } %> > Any</option> -->
                     <option value="homeTution" <% if (fieldValue === 'homeTution') { %>selected<% } %>>Home Tuition</option>
                     <option value="physicalTution" <% if (fieldValue === 'physicalTution') { %>selected<% } %>>Physical Tuition</option>
                     <option value="onlineTution" <% if (fieldValue === 'onlineTution') { %>selected<% } %>>Online Tuition</option>
@@ -374,6 +374,17 @@
   </div>
 </div>
 <!-- teacher form -->
+
+<div class="upToScroll buttonShow">
+  <div class="whatsapp">
+    <a href="https://wa.me/9779865755419" target="_blank"
+      ><h5><i class="fab fa-whatsapp"></i></h5
+    ></a>
+  </div>
+  <a href="javascript:void(0);" class="scrollToTop"
+    ><i class="lnr lnr-chevron-up"></i
+  ></a>
+</div>
 
 <%- include('./scripts') %>
 

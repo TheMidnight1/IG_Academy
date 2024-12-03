@@ -1443,3 +1443,49 @@ footer li {
   left: 0;
   top: 0;
 }
+
+.upToScroll {
+  position: fixed;
+  display: inline-block;
+  height: 40px;
+  bottom: -80px;
+  line-height: 40px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 9997;
+}
+
+.upToScroll.buttonShow {
+  bottom: 80px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.whatsapp {
+  position: fixed;
+  right: 0px;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  font-size: 32px;
+  z-index: 10000;
+  background: #24d366;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.whatsapp h5 {
+  color: white;
+  background-color: #24d366;
+  padding: 0px;
+  border-radius: 10px 0 0 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  font-size: 2.3rem;
+}
