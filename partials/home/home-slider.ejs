@@ -14,16 +14,48 @@
         <div class="left-content col-lg-6 col-md-12" data-aos="fade-left">
           <div class="form-box">
             <form action="#" class="appointment w-100">
-              <div class="col-12 py-2">
+              <div class="row">
+              <div class="col-6 px-4">
+                <div class="form-group">
+                  <label for="Province">Province</label>
+                  <select
+                    name="search-province"
+                    class="form-control select2"
+                    id="search-province"
+                    style="width: 100%"
+                    
+                  >
+                    <option value="">Select Province</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6 px-4">
+                <div class="form-group">
+                  <label for="district">Distict</label>
+                  <select
+                    name="search-district"
+                    class="form-control select2"
+                    id="search-district"
+                    style="width: 100%"
+                    disabled
+                  >
+                    <option value="">Select District</option>
+                  </select>
+                </div>
+              </div>
+              </div>
+              <div class="col-12">
                 <div class="form-group">
                   <label for="">Location</label>
-                  <input
-                    type="text"
-                    name="location"
-                    class="form-control"
-                    id="location"
-                    placeholder="Enter Location"
-                  />
+                  <select
+                  name="search-location"
+                  class="form-control select2"
+                  id="search-location"
+                  style="width: 100%"
+                  disabled
+                >
+                  <option value="">Select Location</option>
+                </select>
                 </div>
               </div>
               <div class="col-12 py-2">

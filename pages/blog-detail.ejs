@@ -40,9 +40,9 @@
       <div class="col-12 col-md-6 col-lg-7 detail-right">
         <h1 class="subtitle">
           <%= post.title %>
-
         </h1>
-        <div class="date-line pb-3">
+        <div class="row">
+        <div class="date-line pb-3 col-12 col-md-4 col-lg-4">
           <% 
             const publishedDate = new Date(post.published_date); 
             
@@ -52,6 +52,12 @@
             %>
           <%= formattedDate %>
         </div>
+        <div class="sharethis-inline-share-buttons col-12 col-md-8 col-lg-8" style="justify-content: flex-end;
+        display: flex
+    ;
+        align-items: baseline;"></div>
+        </div>
+
         <div class="img-containers mb-3">
           <img src="<%= post.featured_image %>">
         </div>

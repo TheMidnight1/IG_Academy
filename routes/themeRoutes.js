@@ -2,6 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 const homeController = require("@/controllers/HomeController");
+const masterController = require("@/controllers/masterController");
 if (!homeController) {
     console.error("Error: HomeController is undefined. Check the module path or export.");
     process.exit(1); // Exit the application to prevent runtime errors
@@ -23,6 +24,11 @@ router.post('/submit-tutor-form', homeController.submitStudentForm);
 //   });
 router.get('/contact', homeController.getContactPage);
 
+router.get('/api/province',masterController.getProvinces);
+
+router.get('/api/districts/:province',masterController.getDistricts);
+
+router.get('/api/municipalities/:district',masterController.getMunicipalities);
 
 // --------------FRONTEND ROUTES END---------------------------------
 

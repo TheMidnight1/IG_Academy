@@ -34,6 +34,173 @@
       },
     }); 
 
+    $('#search-province').select2({
+      placeholder: "Select Province",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#student-province').select2({
+      placeholder: "Select Province",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#teacher-province').select2({
+      placeholder: "Select Province",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#search-district').select2({
+      placeholder: "Select District",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#student-district').select2({
+      placeholder: "Select District",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#search-location').select2({
+      placeholder: "Select Location",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#student-location').select2({
+      placeholder: "Select Location",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
+
+    $('#teacher-location').select2({
+      placeholder: "Select Location",
+      allowClear: true,
+      templateSelection: function (data) {
+        // Customize how selected tags appear
+        if (!data.id) {
+          return data.text; // Show placeholder
+        }
+        return $(
+          `<span style="background-color: #6d02ab; color: #fff; padding: 3px 8px; border-radius: 4px;">${data.text}</span>`
+        );
+      },
+      templateResult: function (data) {
+        // Customize how dropdown options appear (optional)
+        return data.text;
+      },
+      escapeMarkup: function (markup) {
+        return markup; // Allows rendering HTML in templates
+      },
+    }); 
 
     $('#subject-student').select2({
       placeholder: "Select Subjects",
@@ -168,6 +335,258 @@
 
     
   </script>
+
+<script>
+  $(document).ready(function () {
+    // Fetch provinces data on page load
+    $.ajax({
+      url: '/api/province', // Backend route
+      method: 'GET',
+      success: function (data) {
+        if (data && Array.isArray(data)) {
+          const provinceDropdown = $('#search-province');
+          data.forEach((province) => {
+            provinceDropdown.append(
+              `<option value="${province}">${province}</option>`
+            );
+          });
+        }
+      },
+      error: function (err) {
+        console.error('Error fetching provinces:', err);
+      },
+    });
+
+   // Handle province selection
+   $('#search-province').on('change', function () {
+      const selectedProvince = $(this).val();
+      const districtDropdown = $('#search-district');
+      const locationDropdown = $('#search-location');
+
+      // Reset district and location dropdowns
+      districtDropdown.empty().append('<option value="">Select District</option>').prop('disabled', true);
+      locationDropdown.empty().append('<option value="">Select Location</option>').prop('disabled', true);
+
+      // If a valid province is selected, enable district dropdown and fetch districts
+      if (selectedProvince) {
+        districtDropdown.prop('disabled', false);
+        $.ajax({
+          url: `/api/districts/${selectedProvince}`, // Backend route with province parameter
+          method: 'GET',
+          success: function (data) {
+            if (data && Array.isArray(data)) {
+              data.forEach((district) => {
+                districtDropdown.append(
+                  `<option value="${district}">${district}</option>`
+                );
+              });
+            }
+          },
+          error: function (err) {
+            console.error('Error fetching districts:', err);
+          },
+        });
+      }
+    });
+
+    // Handle district selection
+    $('#search-district').on('change', function () {
+      const selectedDistrict = $(this).val();
+      const locationDropdown = $('#search-location');
+
+      // Reset location dropdown
+      locationDropdown.empty().append('<option value="">Select Location</option>').prop('disabled', true);
+
+      if (selectedDistrict) {
+        locationDropdown.prop('disabled', false);
+        $.ajax({
+          url: `/api/municipalities/${selectedDistrict}`,
+          method: 'GET',
+          success: function (data) {
+            if (data && Array.isArray(data)) {
+              data.forEach((municipality) => {
+                locationDropdown.append(
+                  `<option value="${municipality}">${municipality}</option>`
+                );
+              });
+            }
+          },
+          error: function (err) {
+            console.error('Error fetching municipalities:', err);
+          },
+        });
+      }
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    // Fetch provinces data on page load
+    $.ajax({
+      url: '/api/province', // Backend route
+      method: 'GET',
+      success: function (data) {
+        if (data && Array.isArray(data)) {
+          const provinceDropdown = $('#student-province');
+          data.forEach((province) => {
+            provinceDropdown.append(
+              `<option value="${province}">${province}</option>`
+            );
+          });
+        }
+      },
+      error: function (err) {
+        console.error('Error fetching provinces:', err);
+      },
+    });
+
+   // Handle province selection
+   $('#student-province').on('change', function () {
+      const selectedProvince = $(this).val();
+      const districtDropdown = $('#student-district');
+      const locationDropdown = $('#student-location');
+
+      // Reset district and location dropdowns
+      districtDropdown.empty().append('<option value="">Select District</option>').prop('disabled', true);
+      locationDropdown.empty().append('<option value="">Select Location</option>').prop('disabled', true);
+
+      // If a valid province is selected, enable district dropdown and fetch districts
+      if (selectedProvince) {
+        districtDropdown.prop('disabled', false);
+        $.ajax({
+          url: `/api/districts/${selectedProvince}`, // Backend route with province parameter
+          method: 'GET',
+          success: function (data) {
+            if (data && Array.isArray(data)) {
+              data.forEach((district) => {
+                districtDropdown.append(
+                  `<option value="${district}">${district}</option>`
+                );
+              });
+            }
+          },
+          error: function (err) {
+            console.error('Error fetching districts:', err);
+          },
+        });
+      }
+    });
+
+    // Handle district selection
+    $('#student-district').on('change', function () {
+      const selectedDistrict = $(this).val();
+      const locationDropdown = $('#student-location');
+
+      // Reset location dropdown
+      locationDropdown.empty().append('<option value="">Select Location</option>').prop('disabled', true);
+
+      if (selectedDistrict) {
+        locationDropdown.prop('disabled', false);
+        $.ajax({
+          url: `/api/municipalities/${selectedDistrict}`,
+          method: 'GET',
+          success: function (data) {
+            if (data && Array.isArray(data)) {
+              data.forEach((municipality) => {
+                locationDropdown.append(
+                  `<option value="${municipality}">${municipality}</option>`
+                );
+              });
+            }
+          },
+          error: function (err) {
+            console.error('Error fetching municipalities:', err);
+          },
+        });
+      }
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    // Fetch provinces data on page load
+    $.ajax({
+      url: '/api/province', // Backend route
+      method: 'GET',
+      success: function (data) {
+        if (data && Array.isArray(data)) {
+          const provinceDropdown = $('#teacher-province');
+          data.forEach((province) => {
+            provinceDropdown.append(
+              `<option value="${province}">${province}</option>`
+            );
+          });
+        }
+      },
+      error: function (err) {
+        console.error('Error fetching provinces:', err);
+      },
+    });
+
+   // Handle province selection
+   $('#teacher-province').on('change', function () {
+      const selectedProvince = $(this).val();
+      const districtDropdown = $('#teacher-district');
+      const locationDropdown = $('#teacher-location');
+
+      // Reset district and location dropdowns
+      districtDropdown.empty().append('<option value="">Select District</option>').prop('disabled', true);
+      locationDropdown.empty().append('<option value="">Select Location</option>').prop('disabled', true);
+
+      // If a valid province is selected, enable district dropdown and fetch districts
+      if (selectedProvince) {
+        districtDropdown.prop('disabled', false);
+        $.ajax({
+          url: `/api/districts/${selectedProvince}`, // Backend route with province parameter
+          method: 'GET',
+          success: function (data) {
+            if (data && Array.isArray(data)) {
+              data.forEach((district) => {
+                districtDropdown.append(
+                  `<option value="${district}">${district}</option>`
+                );
+              });
+            }
+          },
+          error: function (err) {
+            console.error('Error fetching districts:', err);
+          },
+        });
+      }
+    });
+
+    // Handle district selection
+    $('#teacher-district').on('change', function () {
+      const selectedDistrict = $(this).val();
+      const locationDropdown = $('#teacher-location');
+
+      // Reset location dropdown
+      locationDropdown.empty().append('<option value="">Select Location</option>').prop('disabled', true);
+
+      if (selectedDistrict) {
+        locationDropdown.prop('disabled', false);
+        $.ajax({
+          url: `/api/municipalities/${selectedDistrict}`,
+          method: 'GET',
+          success: function (data) {
+            if (data && Array.isArray(data)) {
+              data.forEach((municipality) => {
+                locationDropdown.append(
+                  `<option value="${municipality}">${municipality}</option>`
+                );
+              });
+            }
+          },
+          error: function (err) {
+            console.error('Error fetching municipalities:', err);
+          },
+        });
+      }
+    });
+  });
+</script>
 
 </body>
 </html>

@@ -122,10 +122,11 @@
 
             <div>
               <% if (Array.isArray(customField) && customField.length > 0) { %>
-              <% customField.forEach(field => { %>
-              <% field.target_type.forEach((fields, index) => { %>
-              <% const fieldName = field.field_name[index]; %>
-              <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
+                <% customField.forEach(field => { %>
+                  <% field.target_type.forEach((fields, index) => { %>
+                    <% const fieldName = field.field_name[index]; %>
+                    <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
+                    
 
               <% if (fieldName === 'Tutoring Days') { %>
               <div class="mb-3">
@@ -164,11 +165,44 @@
                 <label class="form-label">Email</label>
                 <input type="email" class="form-control" name="email" value="<%= fieldValue %>" placeholder="Enter email address" />
               </div>
-              <% } else if (fieldName === 'Location') { %>
+              <% } else if (fieldName === 'province') { %>
               <div class="mb-3">
-                <label class="form-label">Location</label>
-                <input type="text" class="form-control" name="location" value="<%= fieldValue %>" placeholder="Enter location" />
+                <label class="form-label">Province</label>
+                <select
+                    name="student-province"
+                    class="form-control select2"
+                    id="student-province"
+                    style="width: 100%"
+                  >
+                    <option value="">Select Province</option>
+                  </select>
               </div>
+              <% } else if (fieldName === 'district') { %>
+                <div class="mb-3">
+                  <label class="form-label">District</label>
+                  <select
+                  name="student-district"
+                  class="form-control select2"
+                  id="student-district"
+                  style="width: 100%"
+                  disabled
+                >
+                  <option value="">Select District</option>
+                </select>
+                </div>
+              <% } else if (fieldName === 'location') { %>
+                <div class="mb-3">
+                  <label class="form-label">Location</label>
+                  <select
+                  name="student-location"
+                  class="form-control select2"
+                  id="student-location"
+                  style="width: 100%"
+                  disabled
+                >
+                  <option value="">Select Location</option>
+                </select>
+                </div>
               <% } else if (fieldName === 'Tuition Type') { %>
                 <div class="mb-3">
                   <label for="tutionType" class="form-label">Tuition Type</label>
@@ -285,34 +319,44 @@
               </div>
             </div>
           </div>
-        <% } else if (fieldName === 'District') { %>
-          <!-- District -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="teacherDistrict" class="form-label">District</label>
-              <input
-                type="text"
-                class="form-control"
-                id="teacherDistrict"
-                name="teacherDistrict"
-                value="<%= fieldValue %>"
-                required
-              />
+          <% } else if (fieldName === 'province') { %>
+            <div class="mb-3">
+              <label class="form-label">Province</label>
+              <select
+                  name="teacher-province"
+                  class="form-control select2"
+                  id="teacher-province"
+                  style="width: 100%"
+                >
+                  <option value="">Select Province</option>
+                </select>
             </div>
-        <% } else if (fieldName === 'Location') { %>
-            <!-- Location -->
-            <div class="col-md-6 mb-3">
-              <label for="teacherLocation" class="form-label">Location</label>
-              <input
-                type="text"
-                class="form-control"
-                id="teacherLocation"
-                name="teacherLocation"
-                value="<%= fieldValue %>"
-                required
-              />
-            </div>
-          </div>
+            <% } else if (fieldName === 'district') { %>
+              <div class="mb-3">
+                <label class="form-label">District</label>
+                <select
+                name="teacher-district"
+                class="form-control select2"
+                id="teacher-district"
+                style="width: 100%"
+                disabled
+              >
+                <option value="">Select District</option>
+              </select>
+              </div>
+            <% } else if (fieldName === 'location') { %>
+              <div class="mb-3">
+                <label class="form-label">Location</label>
+                <select
+                name="teacher-location"
+                class="form-control select2"
+                id="teacher-location"
+                style="width: 100%"
+                disabled
+              >
+                <option value="">Select Location</option>
+              </select>
+              </div>
         <% } else if (fieldName === 'Phone') { %>
           <!-- Phone -->
           <div class="row">
