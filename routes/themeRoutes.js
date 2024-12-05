@@ -17,7 +17,11 @@ router.get("/post/:postId", homeController.getPostDetailPage);
 
 router.post('/submit-tutor-form', homeController.submitStudentForm);
 
-// router.get("/search/",homeController.getSearchPage);
+// Route for searching tutors
+router.get('/search/tutors', homeController.searchTutors);
+// Route for searching students
+router.get('/search/students', homeController.searchStudents);
+
 
 // router.get('/contact', (req, res) => {
 //     res.render('theme/IG_Academy/pages/contact',{ showingpage: 'contact'}); 

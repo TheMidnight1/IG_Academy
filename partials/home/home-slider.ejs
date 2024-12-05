@@ -139,3 +139,81 @@
   </div>
   <div class="overlay"></div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const provinceSelect = document.getElementById("search-province");
+    const districtSelect = document.getElementById("search-district");
+    const locationSelect = document.getElementById("search-location");
+    const tutorButton = document.getElementById("Tutor");
+    const studentButton = document.getElementById("Student");
+  
+    // Helper function to populate dropdowns
+    const populateSelect = (selectElement, data, placeholder) => {
+      selectElement.innerHTML = `<option value="">${placeholder}</option>`;
+      data.forEach((item) => {
+        selectElement.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+      });
+      selectElement.disabled = false;
+    };
+  
+    // Fetch districts based on province
+    provinceSelect.addEventListener("change", async () => {
+      const provinceId = provinceSelect.value;
+      if (provinceId) {
+        try {
+          const response = await fetch(`/api/districts?provinceId=${provinceId}`);
+          const districts = await response.json();
+          populateSelect(districtSelect, districts, "Select District");
+          locationSelect.disabled = true;
+        } catch (error) {
+          console.error("Error fetching districts:", error);
+        }
+      } else {
+        districtSelect.innerHTML = `<option value="">Select District</option>`;
+        districtSelect.disabled = true;
+        locationSelect.disabled = true;
+      }
+    });
+  
+    // Fetch locations based on district
+    districtSelect.addEventListener("change", async () => {
+      const districtId = districtSelect.value;
+      if (districtId) {
+        try {
+          const response = await fetch(`/api/locations?districtId=${districtId}`);
+          const locations = await response.json();
+          populateSelect(locationSelect, locations, "Select Location");
+        } catch (error) {
+          console.error("Error fetching locations:", error);
+        }
+      } else {
+        locationSelect.innerHTML = `<option value="">Select Location</option>`;
+        locationSelect.disabled = true;
+      }
+    });
+  
+    // Handle form submission
+    const handleFormSubmit = (type) => {
+      const form = document.querySelector(".appointment");
+      const formData = new FormData(form);
+      const params = new URLSearchParams();
+  
+      // Add form data to URL parameters
+      formData.forEach((value, key) => {
+        if (value) {
+          params.append(key, value);
+        }
+      });
+  
+      // Redirect based on the button clicked
+      const url = type === "tutor" ? `/search/tutors` : `/search/students`;
+      window.location.href = `${url}?${params.toString()}`;
+    };
+  
+    // Attach event listeners to buttons
+    tutorButton.addEventListener("click", () => handleFormSubmit("tutor"));
+    studentButton.addEventListener("click", () => handleFormSubmit("student"));
+  });
+  
+</script>
