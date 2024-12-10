@@ -1,5 +1,7 @@
 let lastScrollY = window.scrollY;
 const navbar = document.querySelector('.nav');
+const mobileNav = document.querySelector('.mobile-navigation');
+console.log(mobileNav);
 // const mobile_navbar = document.querySelector('.mobile-navbar');
 // const topMenuHeight = document.querySelector('#top-nav').offsetHeight;
 let isNavbarVisible = true;
@@ -12,24 +14,29 @@ window.addEventListener('scroll', () => {
 	if (currentScrollY > 50) {
 
 		navbar.style.position = `fixed`;
+    mobileNav.style.position = `fixed`
     // mobile_navbar.style.position = 'fixed'
 	  // Hide navbar if scrolling down by more than 30px and navbar is visible
 	  if (currentScrollY - lastScrollY > 40 && isNavbarVisible) {
 		navbar.style.top = `-100px`; // Hide the navbar, accounting for the small menu height
+    mobileNav.style.top = `-100px`;
     // mobile_navbar.style.top = `-35px`;
 		isNavbarVisible = false;
 	  }else if(currentScrollY==0 || currentScrollY<0) {
 		navbar.style.top = `0`;
+    mobileNav.style.top = `0`;
     // mobile_navbar.style.top= `0`;
 	  }
 	  // Show navbar if scrolling up by more than 30px and navbar is hidden
 	  else if (lastScrollY - currentScrollY > 30 && !isNavbarVisible) {
 		navbar.style.top = `0`; // Show the navbar below the small top menu
+    mobileNav.style.top = `0`;
     // mobile_navbar.style.top = `0`;
 		isNavbarVisible = true;
 	  }
 	}else {
 		navbar.style.position = `relative`;	
+    mobileNav.style.position = `relative`;	
     // mobile_navbar.style.position = `relative`;
 	}
   
