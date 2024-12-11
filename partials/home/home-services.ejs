@@ -10,7 +10,7 @@
 
     <% if (posts && posts.length > 0) { %>
       <% posts.forEach(post => { %> 
-        <% if (post.category[0].slug === 'services') { %>
+<% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
         <div class="row py-5 card-contains">
           <a
             href="/post/<%= post._id %>"

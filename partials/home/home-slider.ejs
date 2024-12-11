@@ -68,7 +68,7 @@
                   <select
                     name="level"
                     class="form-control select2"
-                    id="level"
+                     id="level"
                     style="width: 100%"
                   >
                     <option value="">Select Level</option>
@@ -80,28 +80,32 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 py-2">
-                <div class="form-group">
-                  <label for="Subject">Select Subject</label>
-                  <% const subjectCategory = categories.find(cat => cat.slug ===
-                  "subject"); const subjectChildCategories = categories.filter(
-                  category => category.parent && category.parent._id.toString()
-                  === subjectCategory._id.toString() ); %>
-                  <select
-                    name="subject[]"
-                    class="form-control select2"
-                    id="subject"
-                    multiple="multiple"
-                    style="width: 100%"
-                  >
+             <!-- Subject Dropdown -->
+             <div class="col-12 py-2">
+              <div class="form-group">
+                <label for="Subject">Select Subject</label>
+                <% const subjectCategory = categories?.find(cat => cat.slug === "subject"); %>
+                <% const subjectChildCategories = subjectCategory
+                  ? categories.filter(category =>
+                      category.parent &&
+                      category.parent._id.toString() === subjectCategory._id.toString())
+                  : []; %>
+                <select
+                  name="subject[]"
+                  class="form-control select2"
+                  id="subject"
+                  multiple="multiple"
+                  aria-label="Select Subject"
+                  style="width: 100%">
                   <% subjectChildCategories.forEach(childCat => { %>
                     <option value="<%= childCat.slug %>">
                       <%= childCat.title %>
                     </option>
-                    <% }); %>
-                  </select>
-                </div>
+                  <% }); %>
+                </select>
               </div>
+            </div>
+
 
               <div class="col-12 py-2">
                 <div

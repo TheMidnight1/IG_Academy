@@ -13,7 +13,7 @@
       </div>
       <div class="row">
         <% posts.forEach(post => { %> 
-          <% if (post?.category[0].slug === 'blog') { %>
+          <% if (post.category && post.category.length > 0 && post.category[0].slug === 'blog') { %>
             <div class="blog-card col-12 col-lg-6" data-aos="fade-up">
               <a href="/post/<%= post._id %>" class="img-container">
                 <img src="<%= post.featured_image %>" alt="<%= post.title %>" />

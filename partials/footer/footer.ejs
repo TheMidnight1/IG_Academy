@@ -103,20 +103,34 @@
           <!-- Subject Dropdown -->
           <div class="mb-3">
             <label for="studentSubject" class="form-label">Subject for Tutor</label>
-            <% const subjectCategory = categories.find(cat => cat.slug ===
-            "subject"); const subjectChildCategories =
-            categories.filter(category => category.parent &&
-            category.parent._id.toString() === subjectCategory._id.toString() );
+            <% 
+              const subjectCategory = categories?.find(cat => cat.slug === "subject");
+              const subjectChildCategories = subjectCategory
+                ? categories.filter(category =>
+                    category.parent && category.parent._id.toString() === subjectCategory._id.toString()
+                  )
+                : [];
             %>
-            <select name="subjectStudent[]" class="form-control select2" id="subject-student" multiple="multiple" style="width: 100%" required>
-              <% subjectChildCategories.forEach(childCat => { %>
-              <option value="<%= childCat.slug %>">
-                <%= childCat.title %>
-              </option>
-              <% }); %>
+            <select 
+              name="subjectStudent[]" 
+              class="form-control select2" 
+              id="subject-student" 
+              multiple="multiple" 
+              style="width: 100%" 
+              required
+            >
+              <% if (subjectChildCategories.length > 0) { %>
+                <% subjectChildCategories.forEach(childCat => { %>
+                  <option value="<%= childCat.slug %>">
+                    <%= childCat.title %>
+                  </option>
+                <% }); %>
+              <% } else { %>
+                <option value="" disabled>No subjects available</option>
+              <% } %>
             </select>
           </div>
-
+          
 
 
 
