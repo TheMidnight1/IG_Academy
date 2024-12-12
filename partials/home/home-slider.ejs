@@ -61,10 +61,13 @@
               <div class="col-12 py-2">
                 <div class="form-group">
                   <label for="level">Level</label>
-                  <% const levelCategory = categories.find(cat => cat.slug ===
-                  "level"); const levelChildCategories = categories.filter(
-                  category => category.parent && category.parent._id.toString()
-                  === levelCategory._id.toString() ); %>
+                  <% 
+                  const levelCategory = categories.find(cat => cat.slug === "level") || { _id: null };
+                  const levelChildCategories = categories.filter(
+                    category => category.parent && category.parent._id && 
+                    category.parent._id.toString() === (levelCategory._id ? levelCategory._id.toString() : null)
+                  ); 
+                  %>
                   <select
                     name="level"
                     class="form-control select2"
