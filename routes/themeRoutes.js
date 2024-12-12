@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 const homeController = require("@/controllers/HomeController");
-const masterController = require("@/controllers/masterController");
+const masterController = require("@/controllers/MasterController");
 if (!homeController) {
     console.error("Error: HomeController is undefined. Check the module path or export.");
     process.exit(1); // Exit the application to prevent runtime errors

@@ -57,6 +57,7 @@
             <%= formattedDate %></div>
             <div class="row listing-requriement">
               <% post.customFields.forEach(field=> { %>
+                <% if(field.fieldName == "Tutoring Days" || field.fieldName == "Tuition Type" || field.fieldName == "Tuition Type" || field.fieldName == "Salary"){ %>
               <div class="post-info col-12 col-md-6 col-lg-2">
                 <div class="icon-container">
                   <i class="fa-solid fa-house"></i>
@@ -68,6 +69,7 @@
                   <div class="info"><%= field.value %></div>
                 </div>
               </div>
+              <% } %>
               <% }) %>
             </div>
             <div class="btn-container">

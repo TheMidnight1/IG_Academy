@@ -1,6 +1,6 @@
   <div class="nav mobile-navigation py-2 px-4">
     <div class="logo-container">
-      <img src="ideagen-academy/images/IdeaGen_Logo.png" alt="ig-acedemy-logo" />
+      <img src="/theme/IG_Academy/images/IdeaGen_Logo.png" alt="ig-acedemy-logo" />
     </div>
     <div class="menu-toggle" id="menuToggle">
       <div class="bar"></div>
@@ -11,7 +11,7 @@
     <nav id="mobileMenu" class="mobile-menu">
       <div class="menu-header">
         <div class="logo-container">
-          <img src="ideagen-academy/images/IdeaGen_Logo.png" alt="ig-acedemy-logo" />
+          <img src="/theme/IG_Academy/images/IdeaGen_Logo.png" alt="ig-acedemy-logo" />
         </div>
         <div class="close-menu" id="closeMenu">&times;</div>
       </div>
@@ -23,21 +23,44 @@
         <!-- Menu Content -->
         <div id="menu-content" class="tab-panel active">
           <ul class="menu-items">
-            <li class="has-submenu">
-              <a href="javascript:void(0)">Pages <span>+</span></a>
-              <ul class="submenu">
-                <li class="has-submenu-child">
-                  <a href="javascript:void(0)">About <span>+</span></a>
-                  <ul class="submenu-child">
-                    <li><a href="#">About One</a></li>
-                    <li><a href="#">About Two</a></li>
-                    <li><a href="#">About Three</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Staff</a></li>
-                <li><a href="#">Event</a></li>
-              </ul>
-            </li>
+            <% let catCount = 0; %> <% const parentCategories =
+          categories.filter(category => !category.parent); %> <%
+          parentCategories.forEach(cat => { %> <% if (catCount < 4) { %>
+          <li class="has-submenu">
+            <% const childCategories = categories.filter(category =>
+            category.parent && category.parent._id.toString() ===
+            cat._id.toString()); %> <% if (childCategories.length > 0) { %>
+            <a href="javascript:void(0)"><%= cat.title %> <span>+</span></a>
+            <% }else{ %>
+            <a href="/category/<%= cat.slug %>"><%= cat.title %></a>
+            <% } %> <% if (childCategories.length > 0) { %>
+            <ul class="submenu">
+              <li class="has-submenu-child">
+                <% childCategories.forEach(childCat => { %> <% const
+                grandChildCategories = categories.filter(category =>
+                category.parent && category.parent._id.toString() ===
+                childCat._id.toString()); %> <% if (grandChildCategories.length
+                > 0) { %>
+                <a href="javascript:void(0)"><%= childCat.title %><span>+</span></a>
+                <% }else { %>
+                <a href="/category/<%= childCat.slug %>"><%= childCat.title %></a>
+                <% } %> <% if (grandChildCategories.length > 0) { %>
+                <ul class="submenu-child">
+                  <% grandChildCategories.forEach(grandChildCat => { %>
+                  <li>
+                    <a href="/category/<%= grandChildCat.slug %>"
+                      ><%= grandChildCat.title %></a
+                    >
+                  </li>
+                  <% }); %>
+                </ul>
+                <% } %>
+              </li>
+              <% }); %>
+            </ul>
+            <% } %>
+          </li>
+          <% catCount++; %> <% } %> <% }); %>
             <!-- Other Menu Items -->
           </ul>
         </div>
@@ -47,18 +70,18 @@
           <div class="row pb-3 align-items-center">
             <i class="col-2 footer-icon-contact fa-solid fa-location-dot"></i
             ><span class="col-10 footer-contact address"
-              >203 Fake St. Mountain View, San Francisco, California,
-              USA</span
+              >Putalisadak-28, Kathmandu, Nepal</span
             >
           </div>
           <div class="row pb-3 align-items-center">
             <i class="col-2 footer-icon-contact fa-solid fa-phone"></i>
-            <span class="col-10 footer-contact phone">+2 392 3929 210</span>
+            <span class="col-10 footer-contact phone">01-4168335/ 9802369130/ 9851140591</span>
           </div>
           <div class="row pb-3 align-items-center">
             <i class="col-2 footer-icon-contact fa-solid fa-envelope"></i>
             <span class="col-10 footer-contact email">
-              info@yourdomain.com</span
+              admin@ideagen.com.np/ 
+              </span
             >
           </div>
           <div class="social-media d-flex gap-3 align-items-center">
@@ -76,8 +99,21 @@
             ></a>
           </div>
           <div class="btn-container">
-            <div class="login-btn">Call for Tutor</div>
-            <div class="login-btn">Apply fot Tutor</div>
+            <div class="login-btn"><a
+              href="javascript:void(0);"
+              class="login-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#studentModal"
+              >Call for Tutor</a
+            >
+           </div>
+            <div class="login-btn"> <a
+              href="#"
+              class="login-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#teacherModal"
+              >Apply for Tutor</a
+            ></div>
           </div>
         </div>
       </div>
