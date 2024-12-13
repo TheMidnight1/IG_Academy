@@ -11,12 +11,8 @@
     <% if (posts && posts.length > 0) { %>
       <div class="row py-5 card-contains">
       <% posts.forEach(post => { %> 
-<<<<<<< HEAD
-<% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
+    <% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
         <div class="row py-5 card-contains">
-=======
-        <% if (post.category[0].slug === 'services') { %>
->>>>>>> 124933f0062c12572184392788744c04e0642b70
           <a
             href="/post/<%= post._id %>"
             class="card-container col-12 col-md-4 d-flex flex-column justify-content-center align-items-center"

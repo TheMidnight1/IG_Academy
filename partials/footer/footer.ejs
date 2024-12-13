@@ -56,7 +56,7 @@
         </div>
         <div class="row pb-3 align-items-center">
           <i class="col-2 footer-icon-contact fa-solid fa-envelope"></i>
-          <span class="col-10 footer-contact email"> admin@ideagen.com.np/ 
+          <span class="col-10 footer-contact email"> admin@ideagen.com.np/
           </span>
         </div>
       </div>
@@ -87,19 +87,29 @@
           <!-- Level Dropdown -->
           <div class="mb-3">
             <label for="studentLevel" class="form-label">Level</label>
-            <% const levelCategory = categories.find(cat => cat.slug ===
-            "level"); const levelChildCategories = categories.filter(category =>
-            category.parent && category.parent._id.toString() ===
-            levelCategory._id.toString() ); %>
+            <% 
+  const levelCategory = categories.find(cat => cat.slug === "level"); 
+  let levelChildCategories = [];
+  if (levelCategory) {
+    levelChildCategories = categories.filter(category =>
+      category.parent && category.parent._id.toString() === levelCategory._id.toString()
+    ); 
+  }
+  %>
             <select name="level" class="form-control select2" id="level-student" style="width: 100%" required>
               <option value="">Select Level</option>
+              <% if (levelChildCategories.length > 0) { %>
               <% levelChildCategories.forEach(childCat => { %>
               <option value="<%= childCat.slug %>">
                 <%= childCat.title %>
               </option>
               <% }); %>
+              <% } else { %>
+              <option value="">No child categories found</option>
+              <% } %>
             </select>
           </div>
+
 
           <!-- Subject Dropdown -->
           <div class="mb-3">
@@ -112,141 +122,117 @@
                   )
                 : [];
             %>
-            <select 
-              name="subjectStudent[]" 
-              class="form-control select2" 
-              id="subject-student" 
-              multiple="multiple" 
-              style="width: 100%" 
-              required
-            >
+            <select name="subjectStudent[]" class="form-control select2" id="subject-student" multiple="multiple" style="width: 100%" required>
               <% if (subjectChildCategories.length > 0) { %>
-                <% subjectChildCategories.forEach(childCat => { %>
-                  <option value="<%= childCat.slug %>">
-                    <%= childCat.title %>
-                  </option>
-                <% }); %>
+              <% subjectChildCategories.forEach(childCat => { %>
+              <option value="<%= childCat.slug %>">
+                <%= childCat.title %>
+              </option>
+              <% }); %>
               <% } else { %>
-                <option value="" disabled>No subjects available</option>
+              <option value="" disabled>No subjects available</option>
               <% } %>
             </select>
           </div>
-          
 
 
 
-            <div>
-              <% if (Array.isArray(customField) && customField.length > 0) { %>
-                <% customField.forEach(field => { %>
-                  <% field.target_type.forEach((fields, index) => { %>
-                    <% const fieldName = field.field_name[index]; %>
-                    <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
-                    
 
-              <% if (fieldName === 'Tutoring Days') { %>
-              <div class="mb-3">
-                <label class="form-label">Tutoring Days</label>
-                <div class="row">
-                  <div class="box-1 col-6">
-                    <% ['sunday', 'monday', 'tuesday', 'wednesday'].forEach(day => { %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <% if (fieldValue.includes(day)) { %> checked <% } %> />
-                      <label class="form-check-label" for="day-<%= day %>">
-                        <%= day.charAt(0).toUpperCase() + day.slice(1) %>
-                      </label>
-                    </div>
-                    <% }); %>
-                  </div>
-                  <div class="box-1 col-6">
-                    <% ['thursday', 'friday', 'saturday'].forEach(day => { %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <% if (fieldValue.includes(day)) { %> checked <% } %> />
-                      <label class="form-check-label" for="day-<%= day %>">
-                        <%= day.charAt(0).toUpperCase() + day.slice(1) %>
-                      </label>
-                    </div>
-                    <% }); %>
-                  </div>
-                </div>
-              </div>
-              
-              <% } else if (fieldName === 'Phone') { %>
-              <div class="mb-3">
-                <label class="form-label">Phone</label>
-                <input type="text" class="form-control" name="phone" value="<%= fieldValue %>" placeholder="Enter phone number" />
-              </div>
-              <% } else if (fieldName === 'Email') { %>
-              <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" value="<%= fieldValue %>" placeholder="Enter email address" />
-              </div>
-              <% } else if (fieldName === 'province') { %>
-              <div class="mb-3">
-                <label class="form-label">Province</label>
-                <select
-                    name="student-province"
-                    class="form-control select2"
-                    id="student-province"
-                    style="width: 100%"
-                  >
-                    <option value="">Select Province</option>
-                  </select>
-              </div>
-              <% } else if (fieldName === 'district') { %>
-                <div class="mb-3">
-                  <label class="form-label">District</label>
-                  <select
-                  name="student-district"
-                  class="form-control select2"
-                  id="student-district"
-                  style="width: 100%"
-                  disabled
-                >
-                  <option value="">Select District</option>
-                </select>
-                </div>
-              <% } else if (fieldName === 'location') { %>
-                <div class="mb-3">
-                  <label class="form-label">Location</label>
-                  <select
-                  name="student-location"
-                  class="form-control select2"
-                  id="student-location"
-                  style="width: 100%"
-                  disabled
-                >
-                  <option value="">Select Location</option>
-                </select>
-                </div>
-              <% } else if (fieldName === 'Tuition Type') { %>
-                <div class="mb-3">
-                  <label for="tutionType" class="form-label">Tuition Type</label>
-                  <select name="tutionType" class="form-control" id="tutionType" required>
-                    <option value="" <% if (!fieldValue) { %>selected<% } %>>Select Type</option>
-                    <!-- <option value="any" <% if (fieldValue === 'any') { %>selected<% } %> > Any</option> -->
-                    <option value="homeTution" <% if (fieldValue === 'homeTution') { %>selected<% } %>>Home Tuition</option>
-                    <option value="physicalTution" <% if (fieldValue === 'physicalTution') { %>selected<% } %>>Physical Tuition</option>
-                    <option value="onlineTution" <% if (fieldValue === 'onlineTution') { %>selected<% } %>>Online Tuition</option>
-                  </select>
-                </div>
-              <% } %>
-              <% }) %>
-              <% }) %>
-              <% } %>
-              
-            </div>
+          <div>
+            <% if (Array.isArray(customField) && customField.length > 0) { %>
+            <% customField.forEach(field => { %>
+            <% field.target_type.forEach((fields, index) => { %>
+            <% const fieldName = field.field_name[index]; %>
+            <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
 
 
-            <!-- Message -->
+            <% if (fieldName === 'Tutoring Days') { %>
             <div class="mb-3">
-              <label for="studentMessage" class="form-label">Message</label>
-              <textarea class="form-control" id="studentMessage" name="studentMessage" rows="3"></textarea>
+              <label class="form-label">Tutoring Days</label>
+              <div class="row">
+                <div class="box-1 col-6">
+                  <% ['sunday', 'monday', 'tuesday', 'wednesday'].forEach(day => { %>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <% if (fieldValue.includes(day)) { %> checked <% } %> />
+                    <label class="form-check-label" for="day-<%= day %>">
+                      <%= day.charAt(0).toUpperCase() + day.slice(1) %>
+                    </label>
+                  </div>
+                  <% }); %>
+                </div>
+                <div class="box-1 col-6">
+                  <% ['thursday', 'friday', 'saturday'].forEach(day => { %>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <% if (fieldValue.includes(day)) { %> checked <% } %> />
+                    <label class="form-check-label" for="day-<%= day %>">
+                      <%= day.charAt(0).toUpperCase() + day.slice(1) %>
+                    </label>
+                  </div>
+                  <% }); %>
+                </div>
+              </div>
             </div>
 
+            <% } else if (fieldName === 'Phone') { %>
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" name="phone" value="<%= fieldValue %>" placeholder="Enter phone number" />
+            </div>
+            <% } else if (fieldName === 'Email') { %>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" value="<%= fieldValue %>" placeholder="Enter email address" />
+            </div>
+            <% } else if (fieldName === 'province') { %>
+            <div class="mb-3">
+              <label class="form-label">Province</label>
+              <select name="student-province" class="form-control select2" id="student-province" style="width: 100%">
+                <option value="">Select Province</option>
+              </select>
+            </div>
+            <% } else if (fieldName === 'district') { %>
+            <div class="mb-3">
+              <label class="form-label">District</label>
+              <select name="student-district" class="form-control select2" id="student-district" style="width: 100%" >
+                <option value="">Select District</option>
+              </select>
+            </div>
+            <% } else if (fieldName === 'location') { %>
+            <div class="mb-3">
+              <label class="form-label">Location</label>
+              <select name="student-location" class="form-control select2" id="student-location" style="width: 100%" >
+                <option value="">Select Location</option>
+              </select>
+            </div>
+            <% } else if (fieldName === 'Tuition Type') { %>
+            <div class="mb-3">
+              <label for="tutionType" class="form-label">Tuition Type</label>
+              <select name="tutionType" class="form-control" id="tutionType" required>
+                <option value="" <% if (!fieldValue) { %>selected<% } %>>Select Type</option>
+                <!-- <option value="any" <% if (fieldValue === 'any') { %>selected<% } %> > Any</option> -->
+                <option value="homeTution" <% if (fieldValue === 'homeTution') { %>selected<% } %>>Home Tuition</option>
+                <option value="physicalTution" <% if (fieldValue === 'physicalTution') { %>selected<% } %>>Physical Tuition</option>
+                <option value="onlineTution" <% if (fieldValue === 'onlineTution') { %>selected<% } %>>Online Tuition</option>
+              </select>
+            </div>
+            <% } %>
+            <% }) %>
+            <% }) %>
+            <% } %>
+
+          </div>
 
 
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+          <!-- Message -->
+          <div class="mb-3">
+            <label for="studentMessage" class="form-label">Message</label>
+            <textarea class="form-control" id="studentMessage" name="studentMessage" rows="3"></textarea>
+          </div>
+
+
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
@@ -285,138 +271,93 @@
             </select>
           </div>
 
-<!-- Custom Fields -->
-<div >
-  <% if (Array.isArray(customField) && customField.length > 0) { %>
-    <% customField.forEach(field => { %>
-      <% field.target_type.forEach((_, index) => { %>
-        <% const fieldName = field.field_name[index]; %>
-        <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
-  
-        <% if (fieldName === 'Tutoring Days') { %>
-          <!-- Tutoring Days -->
-          <div class="mb-3">
-            <label class="form-label">Tutoring Days</label>
-            <div class="row">
-              <div class="box-1 col-6">
-                <% ['sunday', 'monday', 'tuesday', 'wednesday'].forEach(day => { %>
+          <!-- Custom Fields -->
+          <div>
+            <% if (Array.isArray(customField) && customField.length > 0) { %>
+            <% customField.forEach(field => { %>
+            <% field.target_type.forEach((_, index) => { %>
+            <% const fieldName = field.field_name[index]; %>
+            <% const fieldValue = field.values && field.values[fieldName] ? field.values[fieldName] : ''; %>
+
+            <% if (fieldName === 'Tutoring Days') { %>
+            <!-- Tutoring Days -->
+            <div class="mb-3">
+              <label class="form-label">Tutoring Days</label>
+              <div class="row">
+                <div class="box-1 col-6">
+                  <% ['sunday', 'monday', 'tuesday', 'wednesday'].forEach(day => { %>
                   <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="tutoringDays[]"
-                      id="day-<%= day %>"
-                      value="<%= day %>"
-                      <%= Array.isArray(fieldValue) && fieldValue.includes(day) ? 'checked' : '' %>
-                    />
+                    <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <%= Array.isArray(fieldValue) && fieldValue.includes(day) ? 'checked' : '' %> />
                     <label class="form-check-label" for="day-<%= day %>">
                       <%= day.charAt(0).toUpperCase() + day.slice(1) %>
                     </label>
                   </div>
-                <% }); %>
-              </div>
-              <div class="box-1 col-6">
-                <% ['thursday', 'friday', 'saturday'].forEach(day => { %>
+                  <% }); %>
+                </div>
+                <div class="box-1 col-6">
+                  <% ['thursday', 'friday', 'saturday'].forEach(day => { %>
                   <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="tutoringDays[]"
-                      id="day-<%= day %>"
-                      value="<%= day %>"
-                      <%= Array.isArray(fieldValue) && fieldValue.includes(day) ? 'checked' : '' %>
-                    />
+                    <input class="form-check-input" type="checkbox" name="tutoringDays[]" id="day-<%= day %>" value="<%= day %>" <%= Array.isArray(fieldValue) && fieldValue.includes(day) ? 'checked' : '' %> />
                     <label class="form-check-label" for="day-<%= day %>">
                       <%= day.charAt(0).toUpperCase() + day.slice(1) %>
                     </label>
                   </div>
-                <% }); %>
+                  <% }); %>
+                </div>
               </div>
             </div>
-          </div>
-          <% } else if (fieldName === 'province') { %>
+            <% } else if (fieldName === 'province') { %>
             <div class="mb-3">
               <label class="form-label">Province</label>
-              <select
-                  name="teacher-province"
-                  class="form-control select2"
-                  id="teacher-province"
-                  style="width: 100%"
-                >
-                  <option value="">Select Province</option>
-                </select>
+              <select name="teacher-province" class="form-control select2" id="teacher-province" style="width: 100%">
+                <option value="">Select Province</option>
+              </select>
             </div>
             <% } else if (fieldName === 'district') { %>
-              <div class="mb-3">
-                <label class="form-label">District</label>
-                <select
-                name="teacher-district"
-                class="form-control select2"
-                id="teacher-district"
-                style="width: 100%"
-                disabled
-              >
+            <div class="mb-3">
+              <label class="form-label">District</label>
+              <select name="teacher-district" class="form-control select2" id="teacher-district" style="width: 100%" disabled>
                 <option value="">Select District</option>
               </select>
-              </div>
+            </div>
             <% } else if (fieldName === 'location') { %>
-              <div class="mb-3">
-                <label class="form-label">Location</label>
-                <select
-                name="teacher-location"
-                class="form-control select2"
-                id="teacher-location"
-                style="width: 100%"
-                disabled
-              >
+            <div class="mb-3">
+              <label class="form-label">Location</label>
+              <select name="teacher-location" class="form-control select2" id="teacher-location" style="width: 100%" disabled>
                 <option value="">Select Location</option>
               </select>
+            </div>
+            <% } else if (fieldName === 'Phone') { %>
+            <!-- Phone -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="teacherPhone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="teacherPhone" name="teacherPhone" value="<%= fieldValue %>" required />
               </div>
-        <% } else if (fieldName === 'Phone') { %>
-          <!-- Phone -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="teacherPhone" class="form-label">Phone Number</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="teacherPhone"
-                name="teacherPhone"
-                value="<%= fieldValue %>"
-                required
-              />
+              <% } else if (fieldName === 'Email') { %>
+              <!-- Email -->
+              <div class="col-md-6 mb-3">
+                <label for="teacherEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="<%= fieldValue %>" required />
+              </div>
             </div>
-        <% } else if (fieldName === 'Email') { %>
-            <!-- Email -->
-            <div class="col-md-6 mb-3">
-              <label for="teacherEmail" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="teacherEmail"
-                name="teacherEmail"
-                value="<%= fieldValue %>"
-                required
-              />
-            </div>
+            <% } %>
+            <% }); %>
+            <% }); %>
+            <% } %>
+
           </div>
-        <% } %>
-      <% }); %>
-    <% }); %>
-  <% } %>
-  
-</div>
 
           <!-- Upload CV -->
           <div class="mb-3">
             <label for="teacherCV" class="form-label">Upload CV</label>
-            <input type="file" class="form-control" id="teacherCV" name="teacherCV" accept=".pdf,.doc,.docx"  />
+            <input type="file" class="form-control" id="teacherCV" name="teacherCV" accept=".pdf,.doc,.docx" />
           </div>
 
           <!-- Qualification Certificate -->
           <div class="mb-3">
             <label for="qualificationCert" class="form-label">Qualification Certificate</label>
-            <input type="file" class="form-control" id="qualificationCert" name="qualificationCert" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"  />
+            <input type="file" class="form-control" id="qualificationCert" name="qualificationCert" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
           </div>
 
           <!-- Message -->
@@ -436,13 +377,11 @@
 
 <div class="upToScroll buttonShow">
   <div class="whatsapp">
-    <a href="https://wa.me/9802369130" target="_blank"
-      ><h5><i class="fab fa-whatsapp"></i></h5
-    ></a>
+    <a href="https://wa.me/9802369130" target="_blank">
+      <h5><i class="fab fa-whatsapp"></i></h5>
+    </a>
   </div>
-  <a href="javascript:void(0);" class="scrollToTop"
-    ><i class="lnr lnr-chevron-up"></i
-  ></a>
+  <a href="javascript:void(0);" class="scrollToTop"><i class="lnr lnr-chevron-up"></i></a>
 </div>
 
 <%- include('./scripts') %>
@@ -458,7 +397,6 @@
       // Collect form data
       const formData = new FormData(studentForm);
       const formObject = {};
-
 
       // Convert FormData to a plain object
       formData.forEach((value, key) => {
@@ -480,22 +418,33 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formObject)
+          body: JSON.stringify(formObject),
         });
 
-        if (response.ok) {
-          const result = await response.json();
-          console.log('Form submitted successfully:', result);
-          alert('Form submitted successfully!');
-          studentForm.reset(); // Optional: reset form after successful submission
-        } else {
+        if (!response.ok) {
           const errorData = await response.json();
-          console.error('Form submission failed:', errorData);
-          alert(`Form submission failed: ${errorData.error}`);
+          throw new Error(errorData.error || 'Form submission failed');
         }
+
+        const result = await response.json();
+
+        // Success SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Form submitted successfully!',
+        }).then(() => {
+          location.reload(); 
+        });
       } catch (error) {
-        console.error('Error submitting form:', error);
-        alert('An error occurred. Please try again.');
+        console.error('Error submitting form:', error.message);
+
+        // Error SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message || 'An error occurred while submitting the form.',
+        });
       }
     });
   });
@@ -505,14 +454,14 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const teacherForm = document.getElementById("teacherForm");
-
+  
     teacherForm.addEventListener("submit", async function (event) {
       event.preventDefault(); // Prevent default form submission
-
+  
       const formData = new FormData(teacherForm);
       const formObject = {};
-
-      // Convert FormData to plain object
+  
+      // Convert FormData to a plain object
       formData.forEach((value, key) => {
         if (key.endsWith("[]")) {
           const baseKey = key.slice(0, -2);
@@ -524,7 +473,7 @@
           formObject[key] = value;
         }
       });
-
+  
       try {
         const response = await fetch("/submit-teacher-form", {
           method: "POST",
@@ -533,19 +482,34 @@
           },
           body: JSON.stringify(formObject),
         });
-
+  
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || "Form submission failed");
         }
-
+  
         const result = await response.json();
-        alert("Form submitted successfully!");
-        teacherForm.reset(); // Optional: Reset the form
+  
+        // Success SweetAlert
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Form submitted successfully!",
+        }).then(() => {
+          location.reload(); // Reload the page after success
+        });
+  
       } catch (error) {
         console.error("Error submitting form:", error.message);
-        alert(`An error occurred: ${error.message}`);
+  
+        // Error SweetAlert
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.message || "An error occurred while submitting the form.",
+        });
       }
     });
   });
+  
 </script>

@@ -16,6 +16,8 @@ router.get("/category/:slug", homeController.getCategoryListingPage);
 router.get("/post/:postId", homeController.getPostDetailPage);
 
 router.post('/submit-tutor-form', homeController.submitStudentForm);
+router.post('/submit-teacher-form', homeController.submitTeacherForm);
+
 
 // Route for searching tutors
 router.get('/search/tutors', homeController.searchTutors);
