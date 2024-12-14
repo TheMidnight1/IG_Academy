@@ -1483,9 +1483,14 @@ footer li {
 
 .whatsapp h5 {
   color: white;
-  background-color: #24d366;
   padding: 0px;
   border-radius: 10px 0 0 10px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   font-size: 2.3rem;
+}
+
+.search-result{
+  color: #fff;
+  font-size: 25px;
+  text-align: center;
 }

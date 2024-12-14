@@ -64,7 +64,7 @@
   </div>
 
   <div class="copyright-section" data-aos="fade-up">
-    <span class="copy">Copyright © 2024 Goodwill Cleaning | All rights reserved</span>&nbsp; Site by: <a href="#">CyBurning</a>
+    <span class="copy">Copyright © <%= new Date().getFullYear() %> Ideagen | All rights reserved</span>&nbsp; Site by: <a href="#">CyBurning</a>
   </div>
 </footer>
 
@@ -85,7 +85,8 @@
           </div>
 
           <!-- Level Dropdown -->
-          <div class="mb-3">
+           <div class="row">
+          <div class="mb-3 col-6">
             <label for="studentLevel" class="form-label">Level</label>
             <% 
   const levelCategory = categories.find(cat => cat.slug === "level"); 
@@ -104,11 +105,27 @@
                 <%= childCat.title %>
               </option>
               <% }); %>
+              <option value="others">Others</option>
               <% } else { %>
               <option value="">No child categories found</option>
               <% } %>
             </select>
           </div>
+           <!-- Dynamic Field -->
+  <div class="mb-3 col-6" id="dynamic-field-container-student">
+    <!-- By default, it will show "Select Sub Level" -->
+    <label for="dynamic-field" class="form-label">Sub Level</label>
+    <select
+      name="subLevel"
+      class="form-control select2"
+      id="dynamic-field-student"
+      style="width: 100%"
+      disabled
+    >
+      <option value="">Select Sub Level</option>
+    </select>
+  </div>
+</div>
 
 
           <!-- Subject Dropdown -->
@@ -258,18 +275,40 @@
           </div>
 
           <!-- Level Dropdown -->
-          <div class="mb-3">
+           <div class="row">
+          <div class="mb-3 col-6 col-6">
             <label for="teacherLevel" class="form-label">Level</label>
+            <select
+      name="level"
+      class="form-control select2"
+      id="level-teacher"
+      style="width: 100%"
+      required
+    >
+      <option value="">Select Level</option>
+      <% levelChildCategories.forEach(childCat => { %>
+        <option value="<%= childCat._id %>"><%= childCat.title %></option>
+      <% }); %>
+      <option value="others">Others</option>
+    </select>
+  </div>
 
-            <select name="level" class="form-control select2" id="level-teacher" style="width: 100%" required>
-              <option value="">Select Level</option>
-              <% levelChildCategories.forEach(childCat => { %>
-              <option value="<%= childCat.slug %>">
-                <%= childCat.title %>
-              </option>
-              <% }); %>
-            </select>
-          </div>
+  <!-- Dynamic Field -->
+  <div class="mb-3 col-6" id="dynamic-field-container">
+    <!-- By default, it will show "Select Sub Level" -->
+    <label for="dynamic-field" class="form-label">Sub Level</label>
+    <select
+      name="subLevel"
+      class="form-control select2"
+      id="dynamic-field"
+      style="width: 100%"
+      disabled
+    >
+      <option value="">Select Sub Level</option>
+    </select>
+  </div>
+</div>
+
 
           <!-- Custom Fields -->
           <div>
@@ -512,4 +551,141 @@
     });
   });
   
+</script>
+
+<script>
+  const dynamicFieldContainer = document.getElementById("dynamic-field-container");
+
+  // Sub-Level categories from the server (JSON structure for example)
+  const subCategories = <%- JSON.stringify(categories) %>; // Pass categories data as JSON
+
+  $('#level-teacher').on('change', function () {
+    const selectedValue = this.value;
+
+    // Reset container to clear previous content
+    dynamicFieldContainer.innerHTML = "";
+
+    if (selectedValue === "others") {
+      // Replace with text input
+      dynamicFieldContainer.innerHTML = `
+        <label for="custom-level" class="form-label">Specify Level</label>
+        <input
+          type="text"
+          class="form-control"
+          id="custom-level-teacher"
+          name="customLevelTeacher"
+          placeholder="Enter the Level"
+          required
+        />
+      `;
+    } else if (selectedValue) {
+      // Replace with dropdown populated with child categories
+      const filteredSubCategories = subCategories.filter(
+        (category) =>
+          category.parent &&
+          category.parent._id.toString() === selectedValue
+      );
+
+      // Create a new dropdown
+      let dropdownHTML = `
+        <label for="sub-level" class="form-label">Sub Level</label>
+        <select
+          name="subLevelTeacher"
+          class="form-control select2"
+          id="sub-level-teacher"
+          style="width: 100%"
+          required
+        >
+          <option value="">Select Sub Level</option>
+      `;
+
+      filteredSubCategories.forEach((subCat) => {
+        dropdownHTML += `<option value="${subCat._id}">${subCat.title}</option>`;
+      });
+
+      dropdownHTML += `</select>`;
+      dynamicFieldContainer.innerHTML = dropdownHTML;
+    } else {
+      // Default case: Show empty dropdown
+      dynamicFieldContainer.innerHTML = `
+        <label for="sub-level" class="form-label">Sub Level</label>
+        <select
+          name="subLevelTeacher"
+          class="form-control select2"
+          id="sub-level-teacher"
+          style="width: 100%"
+          disabled
+        >
+          <option value="">Select Sub Level</option>
+        </select>
+      `;
+    }
+  });
+</script>
+
+<script>
+  const dynamicFieldContainers = document.getElementById("dynamic-field-container-student");
+
+  $('#level-student').on('change', function () {
+    const selectedValue = this.value;
+
+    // Reset container to clear previous content
+    dynamicFieldContainers.innerHTML = "";
+
+    if (selectedValue === "others") {
+      // Replace with text input
+      dynamicFieldContainers.innerHTML = `
+        <label for="custom-level" class="form-label">Specify Level</label>
+        <input
+          type="text"
+          class="form-control"
+          id="custom-level-student"
+          name="customLevelStudent"
+          placeholder="Enter the Level"
+          required
+        />
+      `;
+    } else if (selectedValue) {
+      // Replace with dropdown populated with child categories
+      const filteredSubCategories = subCategories.filter(
+        (category) =>
+          category.parent &&
+          category.parent._id.toString() === selectedValue
+      );
+
+      // Create a new dropdown
+      let dropdownHTML = `
+        <label for="sub-level" class="form-label">Sub Level</label>
+        <select
+          name="subLevelStudent"
+          class="form-control select2"
+          id="sub-level-student"
+          style="width: 100%"
+          required
+        >
+          <option value="">Select Sub Level</option>
+      `;
+
+      filteredSubCategories.forEach((subCat) => {
+        dropdownHTML += `<option value="${subCat._id}">${subCat.title}</option>`;
+      });
+
+      dropdownHTML += `</select>`;
+      dynamicFieldContainers.innerHTML = dropdownHTML;
+    } else {
+      // Default case: Show empty dropdown
+      dynamicFieldContainers.innerHTML = `
+        <label for="sub-level" class="form-label">Sub Level</label>
+        <select
+          name="subLevelStudent"
+          class="form-control select2"
+          id="sub-level-student"
+          style="width: 100%"
+          disabled
+        >
+          <option value="">Select Sub Level</option>
+        </select>
+      `;
+    }
+  });
 </script>

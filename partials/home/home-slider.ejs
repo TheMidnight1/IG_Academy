@@ -44,9 +44,24 @@
                 </div>
               </div>
               </div>
-              <div class="col-12">
+              <div class="row">
+              <div class="col-6 px-4">
                 <div class="form-group">
-                  <label for="">Location</label>
+                  <label for="">Municipality</label>
+                  <select
+                  name="search-municipality"
+                  class="form-control select2"
+                  id="search-municipality"
+                  style="width: 100%"
+                  disabled
+                >
+                  <option value="">Select Location</option>
+                </select>
+                </div>
+              </div>
+              <div class="col-6 px-4">
+                <div class="form-group">
+                  <label for="">Area</label>
                   <select
                   name="search-location"
                   class="form-control select2"
@@ -57,6 +72,7 @@
                   <option value="">Select Location</option>
                 </select>
                 </div>
+              </div>
               </div>
               <div class="col-12 py-2">
                 <div class="form-group">
@@ -158,6 +174,7 @@
     const provinceSelect = document.getElementById("search-province");
     const districtSelect = document.getElementById("search-district");
     const locationSelect = document.getElementById("search-location");
+    const locationMunicipality = document.getElementById("search-municipality");
     const tutorButton = document.getElementById("Tutor");
     const studentButton = document.getElementById("Student");
   
@@ -172,10 +189,12 @@
   
     // Fetch districts based on province
     provinceSelect.addEventListener("change", async () => {
-      const provinceId = provinceSelect.value;
-      if (provinceId) {
+      let provinceValue = provinceSelect.value.trim();
+      provinceValue = provinceValue.replace(/\s+/g, '-');
+      console.log(provinceValue);
+      if (provinceValue) {
         try {
-          const response = await fetch(`/api/districts?provinceId=${provinceId}`);
+          const response = await fetch(`/api/districts?provinceId=${provinceValue}`);
           const districts = await response.json();
           populateSelect(districtSelect, districts, "Select District");
           locationSelect.disabled = true;
@@ -191,18 +210,20 @@
   
     // Fetch locations based on district
     districtSelect.addEventListener("change", async () => {
-      const districtId = districtSelect.value;
-      if (districtId) {
+      let districtValue = districtSelect.value.trim();
+      districtValue = districtValue.replace(/\s+/g, '-');
+      console.log(districtValue);
+      if (districtValue) {
         try {
-          const response = await fetch(`/api/locations?districtId=${districtId}`);
+          const response = await fetch(`/api/locations?districtId=${districtValue}`);
           const locations = await response.json();
-          populateSelect(locationSelect, locations, "Select Location");
+          populateSelect(locationMunicipality, locations, "Select Municipality");
         } catch (error) {
-          console.error("Error fetching locations:", error);
+          console.error("Error fetching municipality:", error);
         }
       } else {
-        locationSelect.innerHTML = `<option value="">Select Location</option>`;
-        locationSelect.disabled = true;
+        locationMunicipality.innerHTML = `<option value="">Select Municipality</option>`;
+        locationMunicipality.disabled = true;
       }
     });
   
@@ -228,5 +249,5 @@
     tutorButton.addEventListener("click", () => handleFormSubmit("tutor"));
     studentButton.addEventListener("click", () => handleFormSubmit("student"));
   });
-  
+
 </script>
