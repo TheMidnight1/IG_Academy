@@ -10,9 +10,9 @@
 
     <% if (posts && posts.length > 0) { %>
      
-      <% posts.forEach(post => { %> 
-    <% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
-        <div class="row py-5 card-contains">
+      <div class="row py-5 card-contains">
+          <% posts.forEach(post => { %> 
+        <% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
           <a
             href="/post/<%= post._id %>"
             class="card-container col-12 col-md-4 d-flex flex-column justify-content-center align-items-center"
