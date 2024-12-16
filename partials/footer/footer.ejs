@@ -84,49 +84,42 @@
             <input type="text" class="form-control" id="studentName" name="studentName" required />
           </div>
 
-          <!-- Level Dropdown -->
-           <div class="row">
-          <div class="mb-3 col-6">
-            <label for="studentLevel" class="form-label">Level</label>
-            <% 
-  const levelCategory = categories.find(cat => cat.slug === "level"); 
-  let levelChildCategories = [];
-  if (levelCategory) {
-    levelChildCategories = categories.filter(category =>
-      category.parent && category.parent._id.toString() === levelCategory._id.toString()
-    ); 
-  }
-  %>
-            <select name="level" class="form-control select2" id="level-student" style="width: 100%" required>
-              <option value="">Select Level</option>
-              <% if (levelChildCategories.length > 0) { %>
-              <% levelChildCategories.forEach(childCat => { %>
-              <option value="<%= childCat.slug %>">
-                <%= childCat.title %>
-              </option>
-              <% }); %>
-              <option value="others">Others</option>
-              <% } else { %>
-              <option value="">No child categories found</option>
-              <% } %>
-            </select>
-          </div>
-           <!-- Dynamic Field -->
+<!-- Level and Sub Level Dropdowns -->
+<div class="row">
+  <div class="mb-3 col-6">
+    <label for="studentLevel" class="form-label">Level</label>
+    <% 
+      const levelCategory = categories.find(cat => cat.slug === "level"); 
+      let levelChildCategories = [];
+      if (levelCategory) {
+        levelChildCategories = categories.filter(category =>
+          category.parent && category.parent._id.toString() === levelCategory._id.toString()
+        ); 
+      }
+    %>
+    <select name="level" class="form-control select2" id="level-student" style="width: 100%" required>
+      <option value="">Select Level</option>
+      <% if (levelChildCategories.length > 0) { %>
+        <% levelChildCategories.forEach(childCat => { %>
+        <option value="<%= childCat._id %>">
+          <%= childCat.title %>
+        </option>
+        <% }); %>
+        <option value="others">Others</option>
+      <% } else { %>
+        <option value="">No child categories found</option>
+      <% } %>
+    </select>
+  </div>
+
+  <!-- Dynamic Sub Level Dropdown -->
   <div class="mb-3 col-6" id="dynamic-field-container-student">
-    <!-- By default, it will show "Select Sub Level" -->
     <label for="dynamic-field" class="form-label">Sub Level</label>
-    <select
-      name="subLevel"
-      class="form-control select2"
-      id="dynamic-field-student"
-      style="width: 100%"
-      disabled
-    >
+    <select name="subLevel" class="form-control select2" id="dynamic-field-student" style="width: 100%" disabled>
       <option value="">Select Sub Level</option>
     </select>
   </div>
 </div>
-
 
           <!-- Subject Dropdown -->
           <div class="mb-3">
@@ -210,14 +203,14 @@
             <% } else if (fieldName === 'district') { %>
             <div class="mb-3">
               <label class="form-label">District</label>
-              <select name="student-district" class="form-control select2" id="student-district" style="width: 100%" >
+              <select name="student-district" class="form-control select2" id="student-district" style="width: 100%">
                 <option value="">Select District</option>
               </select>
             </div>
             <% } else if (fieldName === 'location') { %>
             <div class="mb-3">
               <label class="form-label">Location</label>
-              <select name="student-location" class="form-control select2" id="student-location" style="width: 100%" >
+              <select name="student-location" class="form-control select2" id="student-location" style="width: 100%">
                 <option value="">Select Location</option>
               </select>
             </div>
@@ -275,39 +268,27 @@
           </div>
 
           <!-- Level Dropdown -->
-           <div class="row">
-          <div class="mb-3 col-6 col-6">
-            <label for="teacherLevel" class="form-label">Level</label>
-            <select
-      name="level"
-      class="form-control select2"
-      id="level-teacher"
-      style="width: 100%"
-      required
-    >
-      <option value="">Select Level</option>
-      <% levelChildCategories.forEach(childCat => { %>
-        <option value="<%= childCat._id %>"><%= childCat.title %></option>
-      <% }); %>
-      <option value="others">Others</option>
-    </select>
-  </div>
+          <div class="row">
+            <div class="mb-3 col-6 col-6">
+              <label for="teacherLevel" class="form-label">Level</label>
+              <select name="level" class="form-control select2" id="level-teacher" style="width: 100%" required>
+                <option value="">Select Level</option>
+                <% levelChildCategories.forEach(childCat => { %>
+                <option value="<%= childCat._id %>"><%= childCat.title %></option>
+                <% }); %>
+                <option value="others">Others</option>
+              </select>
+            </div>
 
-  <!-- Dynamic Field -->
-  <div class="mb-3 col-6" id="dynamic-field-container">
-    <!-- By default, it will show "Select Sub Level" -->
-    <label for="dynamic-field" class="form-label">Sub Level</label>
-    <select
-      name="subLevel"
-      class="form-control select2"
-      id="dynamic-field"
-      style="width: 100%"
-      disabled
-    >
-      <option value="">Select Sub Level</option>
-    </select>
-  </div>
-</div>
+            <!-- Dynamic Field -->
+            <div class="mb-3 col-6" id="dynamic-field-container">
+              <!-- By default, it will show "Select Sub Level" -->
+              <label for="dynamic-field" class="form-label">Sub Level</label>
+              <select name="subLevel" class="form-control select2" id="dynamic-field" style="width: 100%" disabled>
+                <option value="">Select Sub Level</option>
+              </select>
+            </div>
+          </div>
 
 
           <!-- Custom Fields -->
@@ -473,7 +454,7 @@
           title: 'Success',
           text: 'Form submitted successfully!',
         }).then(() => {
-          location.reload(); 
+          location.reload();
         });
       } catch (error) {
         console.error('Error submitting form:', error.message);
@@ -491,15 +472,15 @@
 
 <!-- For Teacher -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     const teacherForm = document.getElementById("teacherForm");
-  
-    teacherForm.addEventListener("submit", async function (event) {
+
+    teacherForm.addEventListener("submit", async function(event) {
       event.preventDefault(); // Prevent default form submission
-  
+
       const formData = new FormData(teacherForm);
       const formObject = {};
-  
+
       // Convert FormData to a plain object
       formData.forEach((value, key) => {
         if (key.endsWith("[]")) {
@@ -512,7 +493,7 @@
           formObject[key] = value;
         }
       });
-  
+
       try {
         const response = await fetch("/submit-teacher-form", {
           method: "POST",
@@ -521,14 +502,14 @@
           },
           body: JSON.stringify(formObject),
         });
-  
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || "Form submission failed");
         }
-  
+
         const result = await response.json();
-  
+
         // Success SweetAlert
         Swal.fire({
           icon: "success",
@@ -537,10 +518,10 @@
         }).then(() => {
           location.reload(); // Reload the page after success
         });
-  
+
       } catch (error) {
         console.error("Error submitting form:", error.message);
-  
+
         // Error SweetAlert
         Swal.fire({
           icon: "error",
@@ -550,7 +531,6 @@
       }
     });
   });
-  
 </script>
 
 <script>
@@ -559,7 +539,7 @@
   // Sub-Level categories from the server (JSON structure for example)
   const subCategories = <%- JSON.stringify(categories) %>; // Pass categories data as JSON
 
-  $('#level-teacher').on('change', function () {
+  $('#level-teacher').on('change', function() {
     const selectedValue = this.value;
 
     // Reset container to clear previous content
@@ -582,8 +562,8 @@
       // Replace with dropdown populated with child categories
       const filteredSubCategories = subCategories.filter(
         (category) =>
-          category.parent &&
-          category.parent._id.toString() === selectedValue
+        category.parent &&
+        category.parent._id.toString() === selectedValue
       );
 
       // Create a new dropdown
@@ -626,7 +606,7 @@
 <script>
   const dynamicFieldContainers = document.getElementById("dynamic-field-container-student");
 
-  $('#level-student').on('change', function () {
+  $('#level-student').on('change', function() {
     const selectedValue = this.value;
 
     // Reset container to clear previous content
@@ -649,8 +629,8 @@
       // Replace with dropdown populated with child categories
       const filteredSubCategories = subCategories.filter(
         (category) =>
-          category.parent &&
-          category.parent._id.toString() === selectedValue
+        category.parent &&
+        category.parent._id.toString() === selectedValue
       );
 
       // Create a new dropdown
@@ -688,4 +668,45 @@
       `;
     }
   });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const levelDropdown = document.getElementById('level-student');
+    const subLevelDropdown = document.getElementById('dynamic-field-student');
+  
+    // Sub-level mapping as provided by the server
+    const subLevelMapping = <%- JSON.stringify(
+      categories.reduce((acc, category) => {
+        if (category.parent) {
+          const parentId = category.parent._id.toString();
+          if (!acc[parentId]) {
+            acc[parentId] = [];
+          }
+          acc[parentId].push({ slug: category.slug, title: category.title });
+        }
+        return acc;
+      }, {})
+    ) %>;
+  
+    // Handle Level change to update Sub-Level options
+    levelDropdown.addEventListener('change', function () {
+      const selectedLevelId = levelDropdown.value;
+  
+      // Reset Sub-Level dropdown
+      subLevelDropdown.innerHTML = '<option value="">Select Sub Level</option>';
+      subLevelDropdown.disabled = true;
+  
+      if (subLevelMapping[selectedLevelId] && subLevelMapping[selectedLevelId].length > 0) {
+        subLevelMapping[selectedLevelId].forEach((subLevel) => {
+          const option = document.createElement('option');
+          option.value = subLevel.slug;
+          option.textContent = subLevel.title;
+          subLevelDropdown.appendChild(option);
+        });
+        subLevelDropdown.disabled = false;
+      }
+    });
+  });
+  
 </script>
