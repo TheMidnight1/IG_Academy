@@ -9,10 +9,10 @@
     </h2>
 
     <% if (posts && posts.length > 0) { %>
+     
       <div class="row py-5 card-contains">
-      <% posts.forEach(post => { %> 
-    <% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
-        <div class="row py-5 card-contains">
+          <% posts.forEach(post => { %> 
+        <% if (post.category && post.category.length > 0 && post.category[0].slug === 'services') { %>
           <a
             href="/post/<%= post._id %>"
             class="card-container col-12 col-md-4 d-flex flex-column justify-content-center align-items-center"
@@ -33,7 +33,6 @@
       <p class="no-posts-message" data-aos="fade-up">No services are available at the moment.</p>
     <% } %>
     
-  </div>
   <div class="tl-14-cta-vectors">
     <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-1.png" alt="Vector 1" />
     <img src="https://codebasket.xyz/template/talim/dark/assets/images/tl-14/vector-2.png" alt="Vector 2" />

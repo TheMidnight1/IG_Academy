@@ -36,6 +36,8 @@ router.get('/api/districts/:province',masterController.getDistricts);
 
 router.get('/api/municipalities/:district',masterController.getMunicipalities);
 
+router.get('/api/area/:municipality',masterController.getAreas);
+
 // --------------FRONTEND ROUTES END---------------------------------
 
 module.exports = router;

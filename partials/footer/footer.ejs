@@ -1,3 +1,11 @@
+<div class="upToScroll buttonShow">
+  <div class="whatsapp">
+    <a href="https://wa.me/9802369130" target="_blank">
+      <h5><i class="fab fa-whatsapp"></i></h5>
+    </a>
+  </div>
+  <a href="javascript:void(0);" class="scrollToTop"><i class="lnr lnr-chevron-up"></i></a>
+</div>
 <!-- footer -->
 <footer>
   <div class="container">
@@ -9,8 +17,8 @@
         <p class="gray-text-dark"><%- truncateWords(page.content, 40) %></p>
         <% } %> <% }) %>
         <div class="social-media d-flex gap-3 align-items-center">
-          <a href="#"><i class="social-icon fa-brands fa-facebook footer-icon"></i></a>
-          <a href="#"><i class="social-icon fa-brands fa-instagram footer-icon"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61570053673952&" target="_blank"><i class="social-icon fa-brands fa-facebook footer-icon"></i></a>
+          <a href="https://www.instagram.com/ideagen.learning/" target="_blank"><i class="social-icon fa-brands fa-instagram footer-icon"></i></a>
           <a href="#"><i class="social-icon fa-brands fa-twitter footer-icon"></i></a>
           <a href="#"><i class="social-icon fa-brands fa-linkedin footer-icon"></i></a>
         </div>
@@ -395,14 +403,7 @@
 </div>
 <!-- teacher form -->
 
-<div class="upToScroll buttonShow">
-  <div class="whatsapp">
-    <a href="https://wa.me/9802369130" target="_blank">
-      <h5><i class="fab fa-whatsapp"></i></h5>
-    </a>
-  </div>
-  <a href="javascript:void(0);" class="scrollToTop"><i class="lnr lnr-chevron-up"></i></a>
-</div>
+
 
 <%- include('./scripts') %>
 
@@ -574,9 +575,8 @@
           class="form-control select2"
           id="sub-level-teacher"
           style="width: 100%"
-          required
         >
-          <option value="">Select Sub Level</option>
+          <option value="none">Select Sub Level</option>
       `;
 
       filteredSubCategories.forEach((subCat) => {
@@ -641,9 +641,8 @@
           class="form-control select2"
           id="sub-level-student"
           style="width: 100%"
-          required
         >
-          <option value="">Select Sub Level</option>
+          <option value="none">Select Sub Level</option>
       `;
 
       filteredSubCategories.forEach((subCat) => {
