@@ -1,4 +1,6 @@
 const express = require("express");
+const upload = require("../middleware/uploadMiddleware");
+
 
 const router = express.Router();
 const homeController = require("@/controllers/HomeController");
@@ -16,7 +18,11 @@ router.get("/category/:slug", homeController.getCategoryListingPage);
 router.get("/post/:postId", homeController.getPostDetailPage);
 
 router.post('/submit-tutor-form', homeController.submitStudentForm);
-router.post('/submit-teacher-form', homeController.submitTeacherForm);
+
+router.post('/submit-teacher-form', upload.fields([
+    { name: 'teacherCV', maxCount: 1 },
+    { name: 'qualificationCert', maxCount: 1 },
+]),homeController.submitTeacherForm);
 
 
 // Route for searching tutors
