@@ -20,5 +20,10 @@ module.exports = {
     CUSTOM_LISTING_PAGE: {
         "blog" : 'blog-listing',
         "services" : 'blog-listing',
+    },
+
+    POST_FILTER_POST: {
+        "Student" : "student",
+        "Teacher": 'teacher',
     }
 };
