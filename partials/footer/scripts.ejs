@@ -380,93 +380,100 @@
   </script>
 
 <script>
-  $(document).ready(function () {
-    // Fetch provinces data on page load
+ $(document).ready(function () {
+  // Fetch provinces data on page load
+  $.ajax({
+    url: '/api/province', // Backend route
+    method: 'GET',
+    success: function (data) {
+      if (data && Array.isArray(data)) {
+        const provinceDropdown = $('#search-province');
+        data.forEach((province) => {
+          // Capitalize the first letter of the province
+          const capitalizedProvince = province.charAt(0).toUpperCase() + province.slice(1);
+          provinceDropdown.append(
+            `<option value="${province}">${capitalizedProvince}</option>`
+          );
+        });
+      }
+    },
+    error: function (err) {
+      console.error('Error fetching provinces:', err);
+    },
+  });
+});
+
+
+   // Handle province selection
+   $('#search-province').on('change', function () {
+  let selectedProvince = $(this).val().trim();
+  selectedProvince = selectedProvince.replace(/\s+/g, '-');
+  const districtDropdown = $('#search-district');
+  const municipalityDropdown = $('#search-municipality');
+  const areaDropdown = $('#search-location');
+
+  // Reset district and location dropdowns
+  districtDropdown.empty().append('<option value="">Select District</option>').prop('disabled', true);
+  municipalityDropdown.empty().append('<option value="">Select Municipality</option>').prop('disabled', true);
+  areaDropdown.empty().append('<option value="">Select Area</option>').prop('disabled', true);
+
+  // If a valid province is selected, enable district dropdown and fetch districts
+  if (selectedProvince) {
+    districtDropdown.prop('disabled', false);
     $.ajax({
-      url: '/api/province', // Backend route
+      url: `/api/districts/${selectedProvince}`, // Backend route with province parameter
       method: 'GET',
       success: function (data) {
         if (data && Array.isArray(data)) {
-          const provinceDropdown = $('#search-province');
-          data.forEach((province) => {
-            provinceDropdown.append(
-              `<option value="${province}">${province}</option>`
+          data.forEach((district) => {
+            // Capitalize the first letter of the district name
+            const capitalizedDistrict = district.charAt(0).toUpperCase() + district.slice(1);
+            districtDropdown.append(
+              `<option value="${district}">${capitalizedDistrict}</option>`
             );
           });
         }
       },
       error: function (err) {
-        console.error('Error fetching provinces:', err);
+        console.error('Error fetching districts:', err);
       },
     });
-
-   // Handle province selection
-   $('#search-province').on('change', function () {
-      let selectedProvince = $(this).val().trim();
-      selectedProvince = selectedProvince.replace(/\s+/g, '-'); 
-      const districtDropdown = $('#search-district');
-      const municipalityDropdown = $('#search-municipality');
-      const areaDropdown = $('#search-location');
-
-      // Reset district and location dropdowns
-      districtDropdown.empty().append('<option value="">Select District</option>').prop('disabled', true);
-      municipalityDropdown.empty().append('<option value="">Select Municipality</option>').prop('disabled', true);
-      areaDropdown.empty().append('<option value="">Select Area</option>').prop('disabled', true);
-
-      // If a valid province is selected, enable district dropdown and fetch districts
-      if (selectedProvince) {
-        districtDropdown.prop('disabled', false);
-        $.ajax({
-          url: `/api/districts/${selectedProvince}`, // Backend route with province parameter
-          method: 'GET',
-          success: function (data) {
-            if (data && Array.isArray(data)) {
-              data.forEach((district) => {
-                districtDropdown.append(
-                  `<option value="${district}">${district}</option>`
-                );
-              });
-            }
-          },
-          error: function (err) {
-            console.error('Error fetching districts:', err);
-          },
-        });
-      }
-    });
+  }
+});
 
     // Handle district selection
     $('#search-district').on('change', function () {
-      let selectedDistrict = $(this).val().trim();
-      selectedDistrict = selectedDistrict.replace(/\s+/g, '-');
-      const municipalityDropdown = $('#search-municipality');
-      const areaDropdown = $('#search-location');
+  let selectedDistrict = $(this).val().trim();
+  selectedDistrict = selectedDistrict.replace(/\s+/g, '-');
+  const municipalityDropdown = $('#search-municipality');
+  const areaDropdown = $('#search-location');
 
-      // Reset location dropdown
-      municipalityDropdown.empty().append('<option value="">Select Municipality</option>').prop('disabled', true);
-      areaDropdown.empty().append('<option value="">Select Area</option>').prop('disabled', true);
+  // Reset location dropdown
+  municipalityDropdown.empty().append('<option value="">Select Municipality</option>').prop('disabled', true);
+  areaDropdown.empty().append('<option value="">Select Area</option>').prop('disabled', true);
 
-      if (selectedDistrict) {
-        municipalityDropdown.prop('disabled', false);
-        $.ajax({
-          url: `/api/municipalities/${selectedDistrict}`,
-          method: 'GET',
-          success: function (data) {
-            if (data && Array.isArray(data)) {
-              data.forEach((municipality) => {
-                municipalityDropdown.append(
-                  `<option value="${municipality}">${municipality}</option>`
-                );
-              });
-            }
-          },
-          error: function (err) {
-            console.error('Error fetching municipalities:', err);
-          },
-        });
-      }
+  if (selectedDistrict) {
+    municipalityDropdown.prop('disabled', false);
+    $.ajax({
+      url: `/api/municipalities/${selectedDistrict}`,
+      method: 'GET',
+      success: function (data) {
+        if (data && Array.isArray(data)) {
+          data.forEach((municipality) => {
+            // Capitalize the first letter of the municipality name
+            const capitalizedMunicipality = municipality.charAt(0).toUpperCase() + municipality.slice(1);
+            municipalityDropdown.append(
+              `<option value="${municipality}">${capitalizedMunicipality}</option>`
+            );
+          });
+        }
+      },
+      error: function (err) {
+        console.error('Error fetching municipalities:', err);
+      },
     });
-
+  }
+});
     // Handle municipality selection
     $('#search-municipality').on('change', function () {
       let selectedMunicipality = $(this).val().trim();
@@ -494,7 +501,6 @@
         });
       }
     });
-  });
 </script>
 
 <script>
@@ -507,8 +513,10 @@
         if (data && Array.isArray(data)) {
           const provinceDropdown = $('#student-province');
           data.forEach((province) => {
+            // Capitalize the first letter of the province
+            const capitalizedProvince = province.charAt(0).toUpperCase() + province.slice(1);
             provinceDropdown.append(
-              `<option value="${province}">${province}</option>`
+              `<option value="${province}">${capitalizedProvince}</option>`
             );
           });
         }
@@ -518,8 +526,8 @@
       },
     });
 
-   // Handle province selection
-   $('#student-province').on('change', function () {
+    // Handle province selection
+    $('#student-province').on('change', function () {
       const selectedProvince = $(this).val();
       const districtDropdown = $('#student-district');
       const locationDropdown = $('#student-location');
@@ -537,8 +545,10 @@
           success: function (data) {
             if (data && Array.isArray(data)) {
               data.forEach((district) => {
+                // Capitalize the first letter of the district
+                const capitalizedDistrict = district.charAt(0).toUpperCase() + district.slice(1);
                 districtDropdown.append(
-                  `<option value="${district}">${district}</option>`
+                  `<option value="${district}">${capitalizedDistrict}</option>`
                 );
               });
             }
@@ -566,8 +576,10 @@
           success: function (data) {
             if (data && Array.isArray(data)) {
               data.forEach((municipality) => {
+                // Capitalize the first letter of the municipality
+                const capitalizedMunicipality = municipality.charAt(0).toUpperCase() + municipality.slice(1);
                 locationDropdown.append(
-                  `<option value="${municipality}">${municipality}</option>`
+                  `<option value="${municipality}">${capitalizedMunicipality}</option>`
                 );
               });
             }
@@ -581,6 +593,7 @@
   });
 </script>
 
+
 <script>
   $(document).ready(function () {
     // Fetch provinces data on page load
@@ -591,8 +604,10 @@
         if (data && Array.isArray(data)) {
           const provinceDropdown = $('#teacher-province');
           data.forEach((province) => {
+            // Capitalize the first letter of the province
+            const capitalizedProvince = province.charAt(0).toUpperCase() + province.slice(1);
             provinceDropdown.append(
-              `<option value="${province}">${province}</option>`
+              `<option value="${province}">${capitalizedProvince}</option>`
             );
           });
         }
@@ -602,8 +617,8 @@
       },
     });
 
-   // Handle province selection
-   $('#teacher-province').on('change', function () {
+    // Handle province selection
+    $('#teacher-province').on('change', function () {
       const selectedProvince = $(this).val();
       const districtDropdown = $('#teacher-district');
       const locationDropdown = $('#teacher-location');
@@ -621,8 +636,10 @@
           success: function (data) {
             if (data && Array.isArray(data)) {
               data.forEach((district) => {
+                // Capitalize the first letter of the district
+                const capitalizedDistrict = district.charAt(0).toUpperCase() + district.slice(1);
                 districtDropdown.append(
-                  `<option value="${district}">${district}</option>`
+                  `<option value="${district}">${capitalizedDistrict}</option>`
                 );
               });
             }
@@ -650,8 +667,10 @@
           success: function (data) {
             if (data && Array.isArray(data)) {
               data.forEach((municipality) => {
+                // Capitalize the first letter of the municipality
+                const capitalizedMunicipality = municipality.charAt(0).toUpperCase() + municipality.slice(1);
                 locationDropdown.append(
-                  `<option value="${municipality}">${municipality}</option>`
+                  `<option value="${municipality}">${capitalizedMunicipality}</option>`
                 );
               });
             }
@@ -664,6 +683,7 @@
     });
   });
 </script>
+
 
 </body>
 </html>

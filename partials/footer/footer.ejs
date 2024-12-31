@@ -480,7 +480,7 @@
       event.preventDefault(); // Prevent default form submission
   
       const formData = new FormData(teacherForm);
-  
+
       try {
         const response = await fetch("/submit-teacher-form", {
           method: "POST",
