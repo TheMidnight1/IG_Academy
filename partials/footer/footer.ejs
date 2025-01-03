@@ -409,19 +409,18 @@
 
 <!-- For Student -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const studentForm = document.getElementById('studentForm');
-
-    studentForm.addEventListener('submit', async function(event) {
+  
+    studentForm.addEventListener('submit', async function (event) {
       event.preventDefault(); // Prevent default form submission
-
+  
       // Collect form data
       const formData = new FormData(studentForm);
       const formObject = {};
-
+  
       // Convert FormData to a plain object
       formData.forEach((value, key) => {
-        // Handle multiple select and checkboxes
         if (key.endsWith('[]')) {
           const baseKey = key.slice(0, -2);
           if (!formObject[baseKey]) {
@@ -429,10 +428,59 @@
           }
           formObject[baseKey].push(value);
         } else {
-          formObject[key] = value;
+          formObject[key] = value.trim();
         }
       });
-
+  
+      // Required fields
+      const requiredFields = [
+        'studentName',
+        'level',
+        'subjectStudent',
+        'tutoringDays',
+        'phone',
+        'email',
+        'studentDistrict',
+        'studentProvince',
+        'studentLocation',
+        'tutionType',
+      ];
+  
+      // Check for missing fields
+      const missingFields = requiredFields.filter((field) => {
+        if (Array.isArray(formObject[field])) {
+          return !formObject[field].length;
+        }
+        return !formObject[field];
+      });
+  
+      if (missingFields.length > 0) {
+        const fieldNames = {
+          studentName: 'Name',
+          level: 'Level',
+          subjectStudent: 'Subject for Tutor',
+          tutoringDays: 'Tutoring Days',
+          phone: 'Phone',
+          email: 'Email',
+          studentDistrict: 'District',
+          studentProvince: 'Province',
+          studentLocation: 'Location',
+          tutionType: 'Tuition Type',
+        };
+  
+        // Generate a user-friendly list of missing fields
+        const missingFieldNames = missingFields
+          .map((field) => fieldNames[field] || field)
+          .join(', ');
+  
+        Swal.fire({
+          icon: 'warning',
+          title: 'Missing Fields',
+          text: `Please fill out the following required fields: ${missingFieldNames}.`,
+        });
+        return;
+      }
+  
       try {
         const response = await fetch('/submit-tutor-form', {
           method: 'POST',
@@ -441,15 +489,14 @@
           },
           body: JSON.stringify(formObject),
         });
-
+  
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || 'Form submission failed');
         }
-
+  
         const result = await response.json();
-
-        // Success SweetAlert
+  
         Swal.fire({
           icon: 'success',
           title: 'Success',
@@ -459,8 +506,7 @@
         });
       } catch (error) {
         console.error('Error submitting form:', error.message);
-
-        // Error SweetAlert
+  
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -469,16 +515,113 @@
       }
     });
   });
+  
 </script>
 
 <!-- For Teacher -->
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     const teacherForm = document.getElementById("teacherForm");
-  
-    teacherForm.addEventListener("submit", async function(event) {
+
+    teacherForm.addEventListener("submit", async function (event) {
       event.preventDefault(); // Prevent default form submission
-  
+
+      // Validation rules
+      const requiredFields = [
+        { id: "teacherName", error: "Please enter your name." },
+        { id: "level-teacher", error: "Please select a level." },
+        { id: "teacherPhone", error: "Please enter your phone number." },
+        { id: "teacherEmail", error: "Please enter your email address." },
+      ];
+      const requiredFiles = [
+        { id: "teacherCV", error: "Please upload your CV." },
+        { id: "qualificationCert", error: "Please upload your qualification certificate." },
+      ];
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+      const phoneRegex = /^[0-9]{10}$/; // Assumes a 10-digit phone number
+      const nameRegex = /^[a-zA-Z\s]+$/; // Only letters and spaces allowed
+      const fileExtensions = {
+        teacherCV: ["pdf", "doc", "docx"],
+        qualificationCert: ["pdf", "doc", "docx", "jpg", "jpeg", "png"],
+      };
+
+      let isValid = true;
+      let errorMessages = [];
+
+      // Validate required fields
+      requiredFields.forEach(({ id, error }) => {
+        const field = document.getElementById(id);
+        const value = field.value.trim();
+
+        if (!value) {
+          isValid = false;
+          errorMessages.push(error);
+          showError(field, error);
+        } else {
+          removeError(field);
+        }
+      });
+
+      // Validate file uploads
+      requiredFiles.forEach(({ id, error }) => {
+        const fileField = document.getElementById(id);
+        if (fileField.files.length === 0) {
+          isValid = false;
+          errorMessages.push(error);
+          showError(fileField, error);
+        } else {
+          const fileName = fileField.files[0].name;
+          const fileExtension = fileName.split(".").pop().toLowerCase();
+
+          if (!fileExtensions[id].includes(fileExtension)) {
+            isValid = false;
+            const extensionError = `Invalid file type for ${id}. Allowed types: ${fileExtensions[id].join(", ")}.`;
+            errorMessages.push(extensionError);
+            showError(fileField, extensionError);
+          } else {
+            removeError(fileField);
+          }
+        }
+      });
+
+      // Name validation (no numbers allowed)
+      const nameField = document.getElementById("teacherName");
+      if (nameField.value && !nameRegex.test(nameField.value.trim())) {
+        isValid = false;
+        const error = "Name cannot contain numbers or special characters.";
+        errorMessages.push(error);
+        showError(nameField, error);
+      }
+
+      // Email validation
+      const emailField = document.getElementById("teacherEmail");
+      if (emailField.value && !emailRegex.test(emailField.value.trim())) {
+        isValid = false;
+        const error = "Please enter a valid email address.";
+        errorMessages.push(error);
+        showError(emailField, error);
+      }
+
+      // Phone validation
+      const phoneField = document.getElementById("teacherPhone");
+      if (phoneField.value && !phoneRegex.test(phoneField.value.trim())) {
+        isValid = false;
+        const error = "Please enter a valid 10-digit phone number.";
+        errorMessages.push(error);
+        showError(phoneField, error);
+      }
+
+      // If validation fails, show SweetAlert with error messages
+      if (!isValid) {
+        Swal.fire({
+          icon: "error",
+          title: "Validation Error",
+          html: `<ul>${errorMessages.map(msg => `<li>${msg}</li>`).join("")}</ul>`,
+        });
+        return; // Stop submission
+      }
+
+      // Prepare form data for submission
       const formData = new FormData(teacherForm);
 
       try {
@@ -486,14 +629,14 @@
           method: "POST",
           body: formData, // Send FormData directly for file uploads
         });
-  
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || "Form submission failed");
         }
-  
+
         const result = await response.json();
-  
+
         // Success SweetAlert
         Swal.fire({
           icon: "success",
@@ -502,20 +645,36 @@
         }).then(() => {
           location.reload(); // Reload the page after success
         });
-  
+
       } catch (error) {
         console.error("Error submitting form:", error.message);
-  
+
         // Error SweetAlert
         Swal.fire({
           icon: "error",
           title: "Error",
-          text:"An error occurred while submitting the form.",
+          text: "An error occurred while submitting the form.",
         });
       }
     });
+
+    // Helper functions for error handling
+    function showError(field, error) {
+      field.classList.add("is-invalid"); // Add error class
+      field.nextElementSibling?.remove(); // Remove existing error message
+      const errorElement = document.createElement("div");
+      errorElement.className = "invalid-feedback";
+      errorElement.textContent = error;
+      field.parentNode.appendChild(errorElement);
+    }
+
+    function removeError(field) {
+      field.classList.remove("is-invalid"); // Remove error class
+      field.nextElementSibling?.remove(); // Remove error message
+    }
   });
 </script>
+  
 
 <script>
   const dynamicFieldContainer = document.getElementById("dynamic-field-container");
